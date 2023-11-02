@@ -3,7 +3,11 @@
 ExtensionBundleName="RenderQueueTool" 
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<ExtensionList>
+<<<<<<< HEAD
 		<Extension Id="RenderQueueTool" Version="10.3.0"/>
+=======
+		<Extension Id="RenderQueueTool" Version="10.3.0" />
+>>>>>>> 4174a2b119d79cd203e054f2a6396dbc22edfb59
 	</ExtensionList>
 	<ExecutionEnvironment>
 		<HostList>
@@ -13,7 +17,11 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 			<Locale Code="All" />
 		</LocaleList>
 		<RequiredRuntimeList>
+<<<<<<< HEAD
 			<RequiredRuntime Name="CSXS" Version="11.0"/>
+=======
+			<RequiredRuntime Name="CSXS" Version="11.0" />
+>>>>>>> 4174a2b119d79cd203e054f2a6396dbc22edfb59
 		</RequiredRuntimeList>
 	</ExecutionEnvironment>
 
