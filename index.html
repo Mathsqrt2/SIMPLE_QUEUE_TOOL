@@ -3,28 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <title>simpleRenderQueue</title>
-    <script src="/jsx/script.jsx"> </script>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="lib/CSInterface.js"></script>
     <script type="text/javascript">
-        const runAll =()=>{
+        addEventListener('contextmenu',e=>e.preventDefault());
+        const runAll = () =>{
             let cs = new CSInterface;
-                cs.evalScript('$.runScript.simpleRenderQueue()');
+                cs.evalScript('$.runScript.RenderQueueTool()');
         }
     </script>
-    <style>
-        body{
-            background-color: #262626;
-            color: #f5f5f5;
-            text-align: center;
-        }
-        input{
-            display: block;
-            margin: auto;
-            max-width: 100%;
-        }
-    </style>
 </head>
 <body>
-    <input type="text" placeholder="znajdź pliki po nazwie"> 
-    <button id="runButton" type="run" onclick="runAll()">Dodaj do kolejki</button> 
+    <div id="mainContainer">
+        <h3>RenderQueueTool</h3>
+
+        <div class="elementContainer">
+            <label for="typeOfRenderingQueue">Rodzaj renderu</label>
+            <select id="typeOfRenderingQueue">
+                <option>sekwencje</option>
+                <option>klipy</option>
+            </select>
+        </div>
+        
+        <div class="elementContainer">
+            <label for="sequencesChoose"> Zastosuj dla wielu sekwencji </label>
+            <input type="checkbox" id="sequencesChoose" checked>
+        </div>
+
+        <div class="elementContainer">
+            <label>Znajdź sekwencję</label>
+            <input type='text' id="searchedValue" value="null"> 
+        </div>
+        
+        <div class="elementContainer">
+            <button id="runButton" type="run" onclick="runAll()">Dodaj do kolejki</button>
+        </div> 
+    </div>
 </body>
 </html>

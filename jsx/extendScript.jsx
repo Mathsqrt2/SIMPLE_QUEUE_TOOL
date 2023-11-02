@@ -1,8 +1,16 @@
-
 $.runScript = {
+	sequences: [],
 
+	getAvailableSequences: function(){
+		let choose = document.getElementById('sequenceChoose');
+		let searchedValue = document.getElementById('searchedValue');
+		
+		if(choose.checked){
+			$.runScript.sequences.push('test');
+		}
 
-	simpleRenderQueue: function() {
-		alert("Please find and read the ReadMe.txt file for instruction on how to use this panel template.")
+	},
+	RenderQueueTool: function(){
+		alert("test");
 	}	
 }
