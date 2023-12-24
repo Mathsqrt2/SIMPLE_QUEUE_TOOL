@@ -1,14 +1,5 @@
 $.runScript = {
 	RenderQueueTool: function() {
-		alert("test");
+		app.project.createNewSequence("test",'xyz123');
 	},
-	getAvailableSequences: function() {
-		alert('test2');
-		// let choose = document.getElementById('sequenceChoose');
-		// let searchedValue = document.getElementById('searchedValue');
-		
-		// if(choose.checked){
-		// 	$.runScript.sequences.push('test');
-		// }
-	}
 }

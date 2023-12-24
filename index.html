@@ -5,29 +5,21 @@
     <title>simpleRenderQueue</title>
     <link rel="stylesheet" href="css/style.css">
     <script src="lib/CSInterface.js"></script>
-    <script type="text/javascript">
+    <script type="text/javascript" type="module">
         addEventListener('contextmenu',e=>e.preventDefault());
+        let cs = new CSInterface;
+        const AddToRenderingQueue = () =>{
+            cs.evalScript('$.runScript.AddToRenderingQueue()');
+        }
         addEventListener('load',()=>{
-            let cs = new CSInterface;
-
-            const runAll = () =>{    
-                cs.evalScript('$.runScript.RenderQueueTool()');
-            } 
-            const test = () =>{
-                cs.evalScript('$.runScript.getAvailableSequences()');
-            }
-
-            const searchedSequence = document.getElementById('searchedValue');
-                  searchedSequence.addEventListener('keydown',test);
-
             const submit = document.getElementById('runButton');
-                  submit.addEventListener('click',runAll);
+                  submit.addEventListener('click',AddToRenderingQueue);
         })    
     </script>
 </head>
 <body>
     <div id="mainContainer">
-        <h3>RenderQueueTool</h3>
+        <h3 id="mainTitle">RenderQueueTool</h3>
         <div class="elementContainer">
             <label for="typeOfRenderingQueue">Render type: </label>
             <select id="typeOfRenderingQueue">
@@ -40,7 +32,7 @@
             <label for="sequencesChoose"> Apply for: </label>
             <select id="rangeOfRenderingQueue">
                 <option>Current sequence</option>
-                <option>Multiply sequences</option>
+                <option>Multiple sequences</option>
             </select>
         </div>
 
