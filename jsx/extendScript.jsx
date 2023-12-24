@@ -1,7 +1,8 @@
 $.runScript = {
-	processRequest: function(userConfig){
-		config = JSON.parse(userConfig);
-	
+	processRequest: function(config){
+		alert("works");
+		//config = JSON.parse(userConfig);
+		
 		var proj = app.project;
 		var currentSequence = proj.activeSequence;
 	},
