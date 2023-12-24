@@ -1,0 +1,1 @@
+This project is dedicated to everyone who wants to quickly export many elements, such as when creating stock videos where the primary tasks are trimming each clip and making minor edits. The most time-consuming part is often exporting each one.
