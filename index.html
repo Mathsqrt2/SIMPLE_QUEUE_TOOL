@@ -17,19 +17,22 @@
         })    
     </script>
 </head>
+
 <body>
+
     <div id="mainContainer">
+
         <h3 id="mainTitle">RenderQueueTool</h3>
         <div class="elementContainer">
             <label for="typeOfRenderingQueue">Render type: </label>
             <select id="typeOfRenderingQueue">
-                <option>sequence</option>
                 <option>clip</option>
+                <option>sequence</option>
             </select>
         </div>
         
         <div class="elementContainer">
-            <label for="sequencesChoose"> Apply for: </label>
+            <label for="rangeOfRenderingQueue"> Apply for: </label>
             <select id="rangeOfRenderingQueue">
                 <option>Current sequence</option>
                 <option>Multiple sequences</option>
@@ -37,13 +40,22 @@
         </div>
 
         <div class="elementContainer">
-            <label>Find sequence pattern</label>
-            <input type='text' id="searchedValue"> 
+            <label for="searchedValue">Search sequence pattern</label>
+            <input type='text' id="searchedValue" placeholder="choose sequences"> 
+        </div>
+        
+        <div class="elementContainer">
+            <label for="newOutputPath">Output Details</label>
+            <input type='text' id="newOutputPath" placeholder="set output path">
+            <input type="text" id="newFolderName" placeholder="new folder name">
+            <input type="text" id="newNamePattern" placeholder="set files name pattern">
         </div>
         
         <div class="elementContainer">
             <button id="runButton" type="run">Add to queue</button>
         </div> 
+
     </div>
+
 </body>
 </html>
