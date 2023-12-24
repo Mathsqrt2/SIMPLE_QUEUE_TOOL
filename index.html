@@ -8,12 +8,21 @@
     <script type="text/javascript" type="module">
         addEventListener('contextmenu',e=>e.preventDefault());
         let cs = new CSInterface;
-        const AddToRenderingQueue = () =>{
-            cs.evalScript('$.runScript.AddToRenderingQueue()');
+        const processRequest = () =>{
+            const functionParam = {
+                type: document.getElementById('typeOfRenderingQueue').value,
+                applyFor: document.getElementById('rangeOfRenderingQueue').value,
+                sPattern: document.getElementById('searchedValue').value == "" ? null : document.getElementById('searchedValue').value,
+                outputPath: document.getElementById('newOutputPath').value == "" ? null : document.getElementById('newOutputPath').value,
+                folderName: document.getElementById('newFolderName').value == "" ? null :  document.getElementById('newFolderName').value, 
+                filesName: document.getElementById('newNamePattern').value == "" ? null : document.getElementById('newNamePattern').value,
+            }
+            
+            cs.evalScript(`$.runScript.processRequest('${JSON.stringify(functionParam)}')`);
         }
         addEventListener('load',()=>{
             const submit = document.getElementById('runButton');
-                  submit.addEventListener('click',AddToRenderingQueue);
+                  submit.addEventListener('click',processRequest);
         })    
     </script>
 </head>
@@ -34,8 +43,8 @@
         <div class="elementContainer">
             <label for="rangeOfRenderingQueue"> Apply for: </label>
             <select id="rangeOfRenderingQueue">
-                <option>Current sequence</option>
-                <option>Multiple sequences</option>
+                <option>Current_sequence</option>
+                <option>Multiple_sequences</option>
             </select>
         </div>
 
@@ -46,7 +55,7 @@
         
         <div class="elementContainer">
             <label for="newOutputPath">Output Details</label>
-            <input type='text' id="newOutputPath" placeholder="set output path">
+            <input type='text' id="newOutputPath" placeholder="set output path * required *">
             <input type="text" id="newFolderName" placeholder="new folder name">
             <input type="text" id="newNamePattern" placeholder="set files name pattern">
         </div>

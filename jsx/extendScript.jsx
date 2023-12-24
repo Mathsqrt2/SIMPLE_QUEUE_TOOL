@@ -1,7 +1,11 @@
 $.runScript = {
-	AddToRenderingQueue: function() {
+	processRequest: function(userConfig){
+		alert(userConfig);
+	
 		var proj = app.project;
 		var currentSequence = proj.activeSequence;
+	},
+	addToRenderingQueue: function() {
 
 		if(currentSequence){
 			var clipIn, clipOut;
@@ -9,7 +13,7 @@ $.runScript = {
 			
 			var uniqueExport = 0;
 			for(var i = 0; i < availableTracks.length; i++){
-				$.runScript.secureTracks(availableTracks,1);
+				this.secureTracks(availableTracks,1);
 			
 				availableTracks[i].setMute(0);
 				availableTracks[i].setLocked(0);
@@ -17,11 +21,11 @@ $.runScript = {
 				for(var l = 0; l < availableTracks[i].clips.length; l++){
 					clipIn = availableTracks[i].clips[l].start.seconds;
 					clipOut = availableTracks[i].clips[l].end.seconds;
-					$.runScript.trimArea(clipIn,clipOut);
-					$.runScript.addToAME(uniqueExport++);
+					this.trimArea(clipIn,clipOut);
+					this.addToAME(uniqueExport++);
 				}
 			}
-			$.runScript.secureTracks(availableTracks,0);
+			this.secureTracks(availableTracks,0);
 		}
 	},
 	secureTracks: function (tracks,mode){
@@ -30,7 +34,6 @@ $.runScript = {
 			tracks[i].setLocked(mode);
 		}
 	},
-
 	trimArea: function(inp,oup){
 		proj.activeSequence.setOutPoint(oup);
 		proj.activeSequence.setInPoint(inp);
