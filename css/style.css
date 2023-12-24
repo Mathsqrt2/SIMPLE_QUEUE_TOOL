@@ -24,4 +24,12 @@ input{
 }
 .elementContainer{
     margin: 15pt;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4pt;
+}
+select{
+    width: fit-content;
 }
