@@ -54,6 +54,16 @@
         </div>
         
         <div class="elementContainer">
+            <label>Select encoding preset</label>
+            <select id="encodingPreset">
+                <option>h.264 | .mp4</option>
+                <option>vp9 | .webm</option>
+                <option>custom</option>
+            </select>
+            <input type="text" id="customEncodingPresetPath" disabled>
+        </div>
+
+        <div class="elementContainer">
             <label for="newOutputPath">Output Details</label>
             <input type='text' id="newOutputPath" placeholder="set output path * required *">
             <input type="text" id="newFolderName" placeholder="new folder name">

@@ -1,12 +1,11 @@
 $.runScript = {
 	processRequest: function(userConfig){
-		alert(userConfig);
+		config = JSON.parse(userConfig);
 	
 		var proj = app.project;
 		var currentSequence = proj.activeSequence;
 	},
 	addToRenderingQueue: function() {
-
 		if(currentSequence){
 			var clipIn, clipOut;
 			var availableTracks = currentSequence.videoTracks;
@@ -37,6 +36,12 @@ $.runScript = {
 	trimArea: function(inp,oup){
 		proj.activeSequence.setOutPoint(oup);
 		proj.activeSequence.setInPoint(inp);
+	},
+	exportingPreset: function(){
+
+	},
+	fileOutputPath: function(){
+
 	},
 	addToAME: function(nameIterator){
 		var outPath = "D:\\Archiwum\\Pulpit";
