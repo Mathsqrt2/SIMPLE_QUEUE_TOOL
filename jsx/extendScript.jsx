@@ -1,9 +1,10 @@
 $.runScript = {
-	proj: app.project,
-	currentSequence: proj.activeSequence,
 	processRequest: function(userConfig){
-		var config = JSON.parse(userConfig);
-		this.addToRenderingQueue();
+		var proj = app.project;
+		var currentSequence = proj.activeSequence;
+		config = JSON.parse(userConfig);
+		alert(this.fileOutputPath(10));
+		//this.addToRenderingQueue();
 	},
 	addToRenderingQueue: function() {
 		if(currentSequence){
@@ -39,15 +40,13 @@ $.runScript = {
 	},
 	exportingPreset: function(){
 		var outPresetPath;
-		if(config.encodingPreset == "h.264 | .mp4"){
-			alert("tu");
-			outPresetPath = "../lib/basic_vp9.epr";
-		} else if (config.encodingPreset == "vp9 | .webm"){
-			alert("tam");
+		if(this.config.encodingPreset == "h.264 | .mp4"){
+			alert(config.encodingPreset);
+			outPresetPath = "../lib/basic_h264.epr";
+		} else if (this.config.encodingPreset == "vp9 | .webm"){
 			outPresetPath = "../lib/basic_vp9.epr";
 		} else {
-			alert("siam");
-			outPresetPath = config.encodingPreset;
+			outPresetPath = this.config.encodingPreset;
 		}
 		
 		var outPreset = new File(outPresetPath);
@@ -66,7 +65,7 @@ $.runScript = {
 				iteration = currentIteration;
 			}
 		
-		if(config.filesName){
+		if(config.filesName != null && config.filesName != ""){
 			renderFileName = config.filesName + "_" + iteration;
 		} else {
 			renderFileName = currentSequence.name + "_" + iteration;
