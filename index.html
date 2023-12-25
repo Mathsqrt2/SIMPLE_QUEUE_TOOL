@@ -43,16 +43,19 @@
                       submit.disabled = false;
             }
         } 
+        async function getDir() {
+            const dirHandle = await window.showDirectoryPicker();
+
+        }
         const attachBodyScripts = () =>{
-        const submit = document.getElementById('runButton');
         const outputPathField = document.getElementById("newOutputPath");
-              outputPathField.addEventListener('keyup',isConditionFullfiled)
-        
+              outputPathField.addEventListener('keyup',isConditionFullfiled);
+            //outputPathField.addEventListener('click',getDir);
         const applyForSelector = document.getElementById("rangeOfRenderingQueue");
               applyForSelector.addEventListener('change',patternFieldUnlock)
 
         const customPresetSelector = document.getElementById("encodingPreset");
-              customPresetSelector.addEventListener('change',presetPathUnlock);
+              customPresetSelector.addEventListener('change',presetPathUnlock);     
         }
 
         addEventListener('contextmenu',e=>e.preventDefault());
@@ -98,7 +101,7 @@
 
         <div class="elementContainer">
             <label for="newOutputPath">Output Details</label>
-            <input type='text' id="newOutputPath" placeholder="set output path * required *">
+            <input type="text" id="newOutputPath" placeholder="set output path*">
             <input type="text" id="newFolderName" placeholder="new folder name">
             <input type="text" id="newNamePattern" placeholder="set files name pattern">
         </div>

@@ -1,10 +1,9 @@
 $.runScript = {
-	processRequest: function(config){
-		alert("works");
-		//config = JSON.parse(userConfig);
-		
-		var proj = app.project;
-		var currentSequence = proj.activeSequence;
+	proj: app.project,
+	currentSequence: proj.activeSequence,
+	processRequest: function(userConfig){
+		var config = JSON.parse(userConfig);
+		this.addToRenderingQueue();
 	},
 	addToRenderingQueue: function() {
 		if(currentSequence){
@@ -39,19 +38,48 @@ $.runScript = {
 		proj.activeSequence.setInPoint(inp);
 	},
 	exportingPreset: function(){
-
+		var outPresetPath;
+		if(config.encodingPreset == "h.264 | .mp4"){
+			alert("tu");
+			outPresetPath = "../lib/basic_vp9.epr";
+		} else if (config.encodingPreset == "vp9 | .webm"){
+			alert("tam");
+			outPresetPath = "../lib/basic_vp9.epr";
+		} else {
+			alert("siam");
+			outPresetPath = config.encodingPreset;
+		}
+		
+		var outPreset = new File(outPresetPath);
+		var outFormExt = currentSequence.getExportFileExtension(outPreset.fsName);
+		return "." + outFormExt;
 	},
-	fileOutputPath: function(){
-
+	fileOutputPath: function(currentIteration){
+		var iteration, renderFileName;
+			if(currentIteration < 9){
+				iteration = "000" + currentIteration;
+			} else if(currentIteration > 9 && currentIteration <= 99){
+				iteration = "00" + currentIteration;
+			} else if(currentIteration > 99 && currentIteration <= 999){
+				iteration = "0" + currentIteration;
+			} else {
+				iteration = currentIteration;
+			}
+		
+		if(config.filesName){
+			renderFileName = config.filesName + "_" + iteration;
+		} else {
+			renderFileName = currentSequence.name + "_" + iteration;
+		}
+		return renderFileName;		
 	},
 	addToAME: function(nameIterator){
 		var outPath = "D:\\Archiwum\\Pulpit";
-		var outPresetPath = "D:\\Archiwum\\Dokumenty\\Adobe\\Adobe Media Encoder\\23.0\\Presets\\4k25p.epr";
+		
 
 		if(outPresetPath){
-			var outPreset = new File(outPresetPath);
-			var outFormExt = currentSequence.getExportFileExtension(outPreset.fsName);
-			var newFileName = currentSequence.name + "_" + nameIterator + "." + outFormExt;
+
+			var newFileName = this.fileOutputPath(nameIterator) + this.exportingPreset();
 			var outputFilePath = outPath + '\\' + newFileName;
 
 			var checkIfExists = new File(outputFilePath);
