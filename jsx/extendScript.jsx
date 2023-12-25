@@ -1,12 +1,11 @@
 $.runScript = {
 	processRequest: function(userConfig){
-		var proj = app.project;
-		var currentSequence = proj.activeSequence;
+		proj = app.project;
+		currentSequence = proj.activeSequence;
 		config = JSON.parse(userConfig);
-		alert(this.fileOutputPath(10));
-		//this.addToRenderingQueue();
+		this.addAllClipsToMediaEncoderQueue();
 	},
-	addToRenderingQueue: function() {
+	addAllClipsToMediaEncoderQueue: function() {
 		if(currentSequence){
 			var clipIn, clipOut;
 			var availableTracks = currentSequence.videoTracks;
@@ -28,6 +27,11 @@ $.runScript = {
 			this.secureTracks(availableTracks,0);
 		}
 	},
+	exportAllCurrentSequenceDuration: function(){
+	},
+	searchForAllSequences: function(){
+		return 0;
+	},
 	secureTracks: function (tracks,mode){
 		for(var i = 0; i < tracks.length; i++){
 			tracks[i].setMute(mode);
@@ -38,20 +42,22 @@ $.runScript = {
 		proj.activeSequence.setOutPoint(oup);
 		proj.activeSequence.setInPoint(inp);
 	},
-	exportingPreset: function(){
+	exportingPreset: function(mode){
 		var outPresetPath;
-		if(this.config.encodingPreset == "h.264 | .mp4"){
-			alert(config.encodingPreset);
-			outPresetPath = "../lib/basic_h264.epr";
-		} else if (this.config.encodingPreset == "vp9 | .webm"){
-			outPresetPath = "../lib/basic_vp9.epr";
+		if(config.encodingPreset == "h.264 | .mp4"){
+			outPresetPath = "C:\\Program Files (x86)\\Common Files\\Adobe\\CEP\\extensions\\simpleRenderQueue\\lib\\basic_h264.epr";
+		} else if (config.encodingPreset == "vp9 | .webm"){
+			outPresetPath = "C:\\Program Files (x86)\\Common Files\\Adobe\\CEP\\extensions\\simpleRenderQueue\\lib\\basic_vp9.epr";
 		} else {
-			outPresetPath = this.config.encodingPreset;
+			outPresetPath = config.customEncodingPresetPath;
 		}
-		
 		var outPreset = new File(outPresetPath);
 		var outFormExt = currentSequence.getExportFileExtension(outPreset.fsName);
-		return "." + outFormExt;
+		if(mode == 1){
+			return outPresetPath;
+		} else{
+			return "." + outFormExt;
+		}
 	},
 	fileOutputPath: function(currentIteration){
 		var iteration, renderFileName;
@@ -72,14 +78,9 @@ $.runScript = {
 		}
 		return renderFileName;		
 	},
-	addToAME: function(nameIterator){
-		var outPath = "D:\\Archiwum\\Pulpit";
-		
-
-		if(outPresetPath){
-
+	addToAME: function(nameIterator){		
 			var newFileName = this.fileOutputPath(nameIterator) + this.exportingPreset();
-			var outputFilePath = outPath + '\\' + newFileName;
+			var outputFilePath = config.outputPath + '\\' + newFileName;
 
 			var checkIfExists = new File(outputFilePath);
 				if(outputFilePath.exists){
@@ -89,8 +90,7 @@ $.runScript = {
 							checkIfExists.close();
 						}
 				}
-
-			app.encoder.encodeSequence(currentSequence,outputFilePath,presetPath,app.encoder.ENCODE_IN_TO_OUT,0);
-		}
+			
+			app.encoder.encodeSequence(currentSequence,outputFilePath,this.exportingPreset(1),app.encoder.ENCODE_IN_TO_OUT,0);
 	}
 }
