@@ -3,9 +3,7 @@ $.runScript = {
 		proj = app.project;
 		currentSequence = proj.activeSequence;
 		config = JSON.parse(userConfig);
-		
-		this.outputDirectoryPath();
-		//this.addAllClipsToMediaEncoderQueue();
+		this.addAllClipsToMediaEncoderQueue();
 	},
 	addAllClipsToMediaEncoderQueue: function() {
 		if(currentSequence){
