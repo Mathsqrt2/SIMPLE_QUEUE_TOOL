@@ -3,7 +3,9 @@ $.runScript = {
 		proj = app.project;
 		currentSequence = proj.activeSequence;
 		config = JSON.parse(userConfig);
-		this.addAllClipsToMediaEncoderQueue();
+		
+		this.outputDirectoryPath();
+		//this.addAllClipsToMediaEncoderQueue();
 	},
 	addAllClipsToMediaEncoderQueue: function() {
 		if(currentSequence){
@@ -78,9 +80,16 @@ $.runScript = {
 		}
 		return renderFileName;		
 	},
+	outputDirectoryPath: function(){
+		if(config.outputPath != null && config.outputPath != ""){
+			return config.outputPath;
+		} else {
+			return app.project.path.substr(0,app.project.path.length - app.project.name.length); 
+		}
+	},
 	addToAME: function(nameIterator){		
 			var newFileName = this.fileOutputPath(nameIterator) + this.exportingPreset();
-			var outputFilePath = config.outputPath + '\\' + newFileName;
+			var outputFilePath = this.outputDirectoryPath() + '\\' + newFileName;
 
 			var checkIfExists = new File(outputFilePath);
 				if(outputFilePath.exists){
