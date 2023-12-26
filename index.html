@@ -14,7 +14,7 @@
                 encodingPreset: document.getElementById('encodingPreset').value == "" ? null : document.getElementById('encodingPreset').value, 
                 customEncodingPresetPath: document.getElementById('customEncodingPresetPath').value == "" ? null : document.getElementById('customEncodingPresetPath').value,
                 outputPath: document.getElementById('newOutputPath').value == "" ? null : document.getElementById('newOutputPath').value,
-                folderName: document.getElementById('newFolderName').value == "" ? null :  document.getElementById('newFolderName').value, 
+                folderName: document.getElementById('newFolderName').value == "" ? null : document.getElementById('newFolderName').value, 
                 filesName: document.getElementById('newNamePattern').value == "" ? null : document.getElementById('newNamePattern').value,
             }
             let cs = new CSInterface;
@@ -30,27 +30,24 @@
         }
         const presetPathUnlock = (event) => {
             const field = document.getElementById("customEncodingPresetPath");
+            const pathHolder = document.getElementById("selectPresetPath");
+
             if(event.target.value == "custom"){
                 field.disabled = false;
+                pathHolder.disabled = false;
+                field.value = pathHolder.addEventListener('click',getDir);
             } else {
-                field.disabled = true;   
+                field.disabled = true;
+                pathHolder.disabled = true;   
             }
         }
-        const isConditionFullfiled = (event) =>{
-            if(event.target.value != "" && event.target.value != null && event.target.value != undefined){
-                const submit = document.getElementById('runButton');
-                      submit.addEventListener('click',processRequest);
-                      submit.disabled = false;
-            }
-        } 
         async function getDir() {
-            const dirHandle = await window.showDirectoryPicker();
-
+            return dirHandle = await window.showDirectoryPicker();
         }
         const attachBodyScripts = () =>{
-        const outputPathField = document.getElementById("newOutputPath");
-              outputPathField.addEventListener('keyup',isConditionFullfiled);
-            //outputPathField.addEventListener('click',getDir);
+        const submit = document.getElementById('runButton');
+              submit.addEventListener('click',processRequest);
+
         const applyForSelector = document.getElementById("rangeOfRenderingQueue");
               applyForSelector.addEventListener('change',patternFieldUnlock)
 
@@ -97,6 +94,7 @@
                 <option>custom</option>
             </select>
             <input type="text" id="customEncodingPresetPath" placeholder="custom preset path" disabled>
+            <input type="button" id="selectPresetPath" value="select preset path" disabled>
         </div>
 
         <div class="elementContainer">
@@ -107,7 +105,7 @@
         </div>
         
         <div class="elementContainer">
-            <button id="runButton" type="run" disabled>Add to queue</button>
+            <button id="runButton" type="run">Add to queue</button>
         </div> 
 
     </div>
