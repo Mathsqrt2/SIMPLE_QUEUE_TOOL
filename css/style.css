@@ -33,3 +33,7 @@ input{
 select{
     width: fit-content;
 }
+
+#presetPathButton{
+    display: none;
+}

@@ -3,7 +3,7 @@ $.runScript = {
 		proj = app.project;
 		currentSequence = proj.activeSequence;
 		config = JSON.parse(userConfig);
-		this.addAllClipsToMediaEncoderQueue();
+		alert("works");
 	},
 	addAllClipsToMediaEncoderQueue: function() {
 		if(currentSequence){
