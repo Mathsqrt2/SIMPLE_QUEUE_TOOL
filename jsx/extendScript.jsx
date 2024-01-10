@@ -3,7 +3,7 @@ $.runScript = {
 		proj = app.project;
 		currentSequence = proj.activeSequence;
 		config = JSON.parse(userConfig);
-		alert(config);
+		alert(userConfig);
 
 
 	},
