@@ -1,8 +1,8 @@
 $.runScript = {
 	processRequest: function(userConfig){
 		proj = app.project;
-		currentSequence = proj.activeSequence;
 		config = JSON.parse(userConfig);
+		currentSequence = proj.activeSequence;
 
 		if(config.applyFor == "Current_sequence"){
 			if(config.type == "Clips"){
@@ -30,35 +30,41 @@ $.runScript = {
 		}
 
 	},
-	addAllClipsToMediaEncoderQueue: function() {
-		if(currentSequence){
-			var clipIn, clipOut;
-			var availableTracks = currentSequence.videoTracks;
-			
-			var uniqueExport = 0;
-			for(var i = 0; i < availableTracks.length; i++){
-				this.secureTracks(availableTracks,1);
-			
-				availableTracks[i].setMute(0);
-				availableTracks[i].setLocked(0);
+	addToExportAllcurrentSequenceDuration: function(){
 
-				for(var l = 0; l < availableTracks[i].clips.length; l++){
-					clipIn = availableTracks[i].clips[l].start.seconds;
-					clipOut = availableTracks[i].clips[l].end.seconds;
-					this.trimArea(clipIn,clipOut);
-					this.addToAME(uniqueExport++);
+	}
+
+
+	addAllClipsToMediaEncoderQueue: function(localSequence) {
+		if(config.basedOn == "each clip"){
+			if(localSequence){
+				var clipIn, clipOut;
+				var availableTracks = localSequence.videoTracks;
+				
+				var uniqueExport = 0;
+				for(var i = 0; i < availableTracks.length; i++){
+					this.secureTracks(availableTracks,1);
+				
+					availableTracks[i].setMute(0);
+					availableTracks[i].setLocked(0);
+	
+					for(var l = 0; l < availableTracks[i].clips.length; l++){
+						clipIn = availableTracks[i].clips[l].start.seconds;
+						clipOut = availableTracks[i].clips[l].end.seconds;
+						this.trimArea(clipIn,clipOut);
+						this.addToAME(uniqueExport++);
+					}
 				}
+				this.secureTracks(availableTracks,0);
 			}
-			this.secureTracks(availableTracks,0);
+
+		} else {
+			
+			this.trimArea(availableTracks)
+			
 		}
 	},
-	exportAllCurrentSequenceDuration: function(){
-	},
-	searchForAllSequences: function(){
-		if(1==1){
-			return 0;
-		}
-	},
+	
 	secureTracks: function (tracks,mode){
 		for(var i = 0; i < tracks.length; i++){
 			tracks[i].setMute(mode);
