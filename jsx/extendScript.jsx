@@ -3,8 +3,31 @@ $.runScript = {
 		proj = app.project;
 		currentSequence = proj.activeSequence;
 		config = JSON.parse(userConfig);
-		alert(userConfig);
 
+		if(config.applyFor == "Current_sequence"){
+			if(config.type == "Clips"){
+				// for each clip in current sequence
+			} else {
+				// add only current sequence
+			}
+		} else {
+			// for Multiple_sequences
+			if(config.searchPattern != null){
+				// if search pattern is set
+				if(config.type == "Clips"){
+					// for each clip in every sequence found
+				} else {
+					// for each found sequence
+				}
+			} else {
+				// if search pattern is undefined
+				if(config.type == "Clips"){
+					// for each clip in every sequence
+				} else {
+					// for every sequence
+				}
+			}
+		}
 
 	},
 	addAllClipsToMediaEncoderQueue: function() {
