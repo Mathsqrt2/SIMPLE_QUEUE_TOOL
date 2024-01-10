@@ -3,7 +3,9 @@ $.runScript = {
 		proj = app.project;
 		currentSequence = proj.activeSequence;
 		config = JSON.parse(userConfig);
-		alert("works");
+		alert(config);
+
+
 	},
 	addAllClipsToMediaEncoderQueue: function() {
 		if(currentSequence){
@@ -33,7 +35,6 @@ $.runScript = {
 		if(1==1){
 			return 0;
 		}
-		
 	},
 	secureTracks: function (tracks,mode){
 		for(var i = 0; i < tracks.length; i++){
@@ -100,7 +101,6 @@ $.runScript = {
 							checkIfExists.close();
 						}
 				}
-			
 			app.encoder.encodeSequence(currentSequence,outputFilePath,this.exportingPreset(1),app.encoder.ENCODE_IN_TO_OUT,0);
 	}
 }
