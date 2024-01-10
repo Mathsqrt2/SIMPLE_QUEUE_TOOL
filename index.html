@@ -10,6 +10,7 @@
 <body>
     <div id="mainContainer">
         <h3 id="mainTitle">RenderQueueTool</h3>
+        
         <div class="elementContainer">
             <label for="typeOfRenderingQueue">Render type: </label>
             <select id="typeOfRenderingQueue">
@@ -17,6 +18,7 @@
                 <option>Sequences</option>
             </select>
         </div>
+        
         <div class="elementContainer">
             <label for="rangeOfRenderingQueue"> Apply for: </label>
             <select id="rangeOfRenderingQueue">
@@ -24,10 +26,21 @@
                 <option>Multiple_sequences</option>
             </select>
         </div>
+        
         <div class="elementContainer">
             <label for="searchedValue">Search sequence pattern</label>
             <input type='text' id="searchedValue" placeholder="choose sequences" disabled> 
         </div>
+        
+        <div class="elementContainer">
+            <label for=""></label>
+            <select id="basedOn">
+                <option>each clip</option>
+                <option>clips on track:</option>
+                <input id="baseIndex" type="number" placeholder="base track index" disabled>
+            </select>
+        </div>
+
         <div class="elementContainer">
             <label>Select encoding preset</label>
             <select id="encodingPreset">
@@ -38,12 +51,15 @@
             <input type="text" id="customEncodingPresetPath" placeholder="custom preset path" disabled>
             <input type="button" id="selectPresetPath" value="select preset path" disabled>
         </div>
+        
         <div class="elementContainer">
             <label for="newOutputPath">Output Details</label>
             <input type="text" id="newOutputPath" placeholder="set output path">
             <input type="text" id="newFolderName" placeholder="new folder name">
             <input type="text" id="newNamePattern" placeholder="set files name pattern">
+            <input type="number" id="IndexOffset" placeholder="set name index offset">
         </div>
+        
         <div class="elementContainer">
             <button id="runButton" type="run">Add to queue</button>
         </div> 

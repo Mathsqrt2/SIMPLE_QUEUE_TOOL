@@ -30,7 +30,10 @@ $.runScript = {
 	exportAllCurrentSequenceDuration: function(){
 	},
 	searchForAllSequences: function(){
-		return 0;
+		if(1==1){
+			return 0;
+		}
+		
 	},
 	secureTracks: function (tracks,mode){
 		for(var i = 0; i < tracks.length; i++){
@@ -61,7 +64,7 @@ $.runScript = {
 	},
 	fileOutputPath: function(currentIteration){
 		var iteration, renderFileName;
-			if(currentIteration < 9){
+			if(currentIteration <= 9){
 				iteration = "000" + currentIteration;
 			} else if(currentIteration > 9 && currentIteration <= 99){
 				iteration = "00" + currentIteration;
