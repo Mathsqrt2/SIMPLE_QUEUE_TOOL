@@ -6,7 +6,7 @@ $.runScript = {
 
 		if(config.applyFor == "Current_sequence"){
 			if(config.type == "Clips"){
-				// for each clip in current sequence
+				this.addAllClipsToMediaEncoderQueue(currentSequence);
 			} else {
 				// add only current sequence
 			}
@@ -30,18 +30,21 @@ $.runScript = {
 		}
 
 	},
-	addToExportAllcurrentSequenceDuration: function(){
+	addToExportAllcurrentSequenceDuration: function(localSequence){
+		var clipIn, clipOut;
+		var availableTracks = localSequence.videoTracks;
+	},
 
-	}
 
+	addAllClipsToMediaEncoderQueue: function(localSequence){
+		
+		var clipIn, clipOut;
+		var availableTracks = localSequence.videoTracks;
+		var uniqueExport = 0;
 
-	addAllClipsToMediaEncoderQueue: function(localSequence) {
-		if(config.basedOn == "each clip"){
+		if(config.basedOn == "Each clip"){
+			// based on every clip in sequence
 			if(localSequence){
-				var clipIn, clipOut;
-				var availableTracks = localSequence.videoTracks;
-				
-				var uniqueExport = 0;
 				for(var i = 0; i < availableTracks.length; i++){
 					this.secureTracks(availableTracks,1);
 				
@@ -59,12 +62,21 @@ $.runScript = {
 			}
 
 		} else {
-			
-			this.trimArea(availableTracks)
-			
+			// based on clips from specified track
+			if(localSequence && config.basedOnIndex < availableTracks.length){
+				this.secureTracks(availableTracks,0);
+				for(var i = 0; i < availableTracks[config.basedOnIndex].clips.length; i++){
+					clipIn = availableTracks[config.basedOnIndex].clips[i].start.seconds;
+					clipOut = availableTracks[config.basedOnIndex].clips[i].end.seconds;
+					this.trimArea(clipIn,clipOut);
+					this.addToAME(uniqueExport++);
+				}
+			} else {
+				alert("track with specified index doesn't exist");
+			}	
 		}
 	},
-	
+
 	secureTracks: function (tracks,mode){
 		for(var i = 0; i < tracks.length; i++){
 			tracks[i].setMute(mode);
