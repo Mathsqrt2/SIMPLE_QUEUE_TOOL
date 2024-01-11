@@ -178,8 +178,9 @@ $.runScript = {
 			return "." + outFormExt;
 		}
 	},
-	fileOutputPath: function(currentIteration){
+	fileOutputPath: function(paramIterator){
 		var iteration, renderFileName;
+		var currentIteration = Number(paramIterator) + Number(config.namesIndexOffset);
 			if(currentIteration < 0){
 				iteration = "";
 			} else if(currentIteration <= 9){
