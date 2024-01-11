@@ -17,14 +17,18 @@
                 <option>Clips</option>
                 <option>Sequences</option>
             </select>
+            <div class="checkboxHolder"> 
+            <label for="numOn" class="hidden" id="numOnLabel"> sequences numeration </label>
+            <input type="checkbox" id="numOn" class="hidden">
+            </div>
         </div>
         
-        <div class="elementContainer">
-            <label for="basedOn">Rendering based on</label>
+        <div class="elementContainer" id="basedOnContainer">
+            <label for="basedOn" id="fieldLabel">Rendering based on</label>
             <select id="basedOn">
                 <option>Each clip</option>
                 <option>Clips on track:</option>
-                <input id="baseIndex" type="number" placeholder="base track index" min="0" disabled>
+                <input id="baseIndex" type="number" placeholder="base track index" min="0" class="hidden" disabled>
             </select>
         </div>
 
@@ -36,9 +40,9 @@
             </select>
         </div>
         
-        <div class="elementContainer">
-            <label for="searchedValue">Search sequence pattern</label>
-            <input type='text' id="searchedValue" placeholder="choose sequences" disabled> 
+        <div class="hidden" class="elementContainer" id="searchContainer">
+            <label for="searchedValue" class="hidden" id="searchLbl">Search sequence pattern</label>
+            <input type='text' id="searchedValue" placeholder="choose sequences" class="hidden" disabled> 
         </div>
 
         <div class="elementContainer">
@@ -48,8 +52,8 @@
                 <option>vp9 | .webm</option>
                 <option>custom</option>
             </select>
-            <input type="button" id="selectPresetPath" value="select preset path" disabled>
-            <input type="file" id="presetPathButton">
+            <input type="button" id="selectPresetPath" value="select preset path" class="hidden" disabled>
+            <input type="file" id="presetPathButton" class="hidden">
         </div>
         
         <div class="elementContainer">
@@ -57,7 +61,7 @@
             <input type="button" id="newOutputPath" value="set output path" data-path="">
             <input type="text" id="newFolderName" placeholder="new folder name">
             <input type="text" id="newNamePattern" placeholder="set files name pattern">
-            <input type="number" id="indexOffset" placeholder="set name index offset" min="0" max="9000">
+            <input type="number" id="indexOffset" placeholder="index offset" min="0" max="9000">
         </div>
         
         <div class="elementContainer">

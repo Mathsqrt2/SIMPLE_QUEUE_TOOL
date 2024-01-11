@@ -3,7 +3,8 @@ $.runScript = {
 		proj = app.project;
 		config = JSON.parse(userConfig);
 		currentSequence = proj.activeSequence;
-		
+		uniqueExport = config.exportsNumber;
+
 		if(config.applyFor == "Current_sequence"){
 			if(config.type == "Clips"){
 				this.addAllClipsToMediaEncoderQueue(currentSequence);
@@ -15,8 +16,13 @@ $.runScript = {
 			if(config.searchPattern != null){
 				// if search pattern is set
 				if(config.type == "Clips"){
-					// for each clip in every sequence found					
+					// for each clip in every sequence found
+					proj.openSequence(currentSequence.sequenceID);
+					this.addAllClipsToMediaEncoderQueue(currentSequence);					
 				} else {
+					
+					proj.openSequence(currentSequence.sequenceID);
+					this.addAllClipsToMediaEncoderQueue(currentSequence);
 					// for every sequence in found pattern
 				}
 			} else {
@@ -31,8 +37,10 @@ $.runScript = {
 						alert("This project doesn't contain any sequences");
 					}
 				} else {
+					var numOn;
 					if(proj.sequences.numSequences > 0){
 						for(var i = 0; i < proj.sequences.numSequences; i++){
+							numOn = config.numOn == true ? numOn = i : -1;
 							currentSequence = proj.sequences[i]; 
 							proj.openSequence(currentSequence.sequenceID);
 							this.addToExportAllcurrentSequenceDuration(currentSequence,i);
@@ -43,7 +51,8 @@ $.runScript = {
 				}
 			}
 		}
-
+		
+		return uniqueExport;
 	},
 	addToExportAllcurrentSequenceDuration: function(localSequence,localIteration){
 		var clipIn, clipOut;
@@ -81,7 +90,7 @@ $.runScript = {
 		
 		var clipIn, clipOut;
 		var availableTracks = localSequence.videoTracks;
-		var uniqueExport = 0;
+		
 
 		if(localSequence){
 			if(availableTracks.length > 0){

@@ -37,6 +37,25 @@ select{
     width: fit-content;
 }
 
-#presetPathButton{
+.hidden{
     display: none;
+}
+
+#runButton{
+    padding: 10px;
+    border-radius: 8px;
+    border: 2px solid black;
+    color: black;
+    background-color: #ffffff;
+}
+
+.checkboxHolder{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+#numOn{
+    margin-left: 10px;
 }
