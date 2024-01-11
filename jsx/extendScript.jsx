@@ -3,7 +3,7 @@ $.runScript = {
 		proj = app.project;
 		config = JSON.parse(userConfig);
 		currentSequence = proj.activeSequence;
-
+		
 		if(config.applyFor == "Current_sequence"){
 			if(config.type == "Clips"){
 				this.addAllClipsToMediaEncoderQueue(currentSequence);
@@ -15,16 +15,31 @@ $.runScript = {
 			if(config.searchPattern != null){
 				// if search pattern is set
 				if(config.type == "Clips"){
-					// for each clip in every sequence found
+					// for each clip in every sequence found					
 				} else {
-					// for each found sequence
+					// for every sequence in found pattern
 				}
 			} else {
-				// if search pattern is undefined
 				if(config.type == "Clips"){
-					// for each clip in every sequence
+					if(proj.sequences.numSequences > 0){
+						for(var i = 0; i < proj.sequences.numSequences; i++){
+							currentSequence = proj.sequences[i]; 
+							proj.openSequence(currentSequence.sequenceID);
+							this.addAllClipsToMediaEncoderQueue(currentSequence);
+						}
+					} else{
+						alert("This project doesn't contain any sequences");
+					}
 				} else {
-					// for every sequence
+					if(proj.sequences.numSequences > 0){
+						for(var i = 0; i < proj.sequences.numSequences; i++){
+							currentSequence = proj.sequences[i]; 
+							proj.openSequence(currentSequence.sequenceID);
+							this.addToExportAllcurrentSequenceDuration(currentSequence,i);
+						}
+					} else{
+						alert("This project doesn't contain any sequences");
+					}
 				}
 			}
 		}
@@ -62,8 +77,6 @@ $.runScript = {
 			alert("Specified sequence doesn't exist!");
 		}
 	},
-
-
 	addAllClipsToMediaEncoderQueue: function(localSequence){
 		
 		var clipIn, clipOut;
@@ -107,7 +120,6 @@ $.runScript = {
 			alert("Specified sequence doesn't exists!");
 		}
 	},
-
 	secureTracks: function (tracks,mode){
 		for(var i = 0; i < tracks.length; i++){
 			tracks[i].setMute(mode);
@@ -140,19 +152,19 @@ $.runScript = {
 			if(currentIteration < 0){
 				iteration = "";
 			} else if(currentIteration <= 9){
-				iteration = "000" + currentIteration;
+				iteration = "_000" + currentIteration;
 			} else if(currentIteration > 9 && currentIteration <= 99){
-				iteration = "00" + currentIteration;
+				iteration = "_00" + currentIteration;
 			} else if(currentIteration > 99 && currentIteration <= 999){
-				iteration = "0" + currentIteration;
+				iteration = "_0" + currentIteration;
 			} else {
-				iteration = currentIteration;
+				iteration = "_" + currentIteration;
 			}
 		
 		if(config.filesName != null && config.filesName != ""){
-			renderFileName = config.filesName + "_" + iteration;
+			renderFileName = config.filesName + iteration;
 		} else {
-			renderFileName = currentSequence.name + "_" + iteration;
+			renderFileName = currentSequence.name + iteration;
 		}
 		return renderFileName;		
 	},
