@@ -3,28 +3,52 @@ $.runScript = {
 		proj = app.project;
 		config = JSON.parse(userConfig);
 		currentSequence = proj.activeSequence;
-		uniqueExport = config.exportsNumber;
 
 		if(config.applyFor == "Current_sequence"){
 			if(config.type == "Clips"){
 				this.addAllClipsToMediaEncoderQueue(currentSequence);
 			} else {
-				this.addToExportAllcurrentSequenceDuration(currentSequence,-1);
+				this.addToExportAllCurrentSequenceDuration(currentSequence,-1);
 			}
 		} else {
-			// for Multiple_sequences
 			if(config.searchPattern != null){
-				// if search pattern is set
-				if(config.type == "Clips"){
-					// for each clip in every sequence found
-					proj.openSequence(currentSequence.sequenceID);
-					this.addAllClipsToMediaEncoderQueue(currentSequence);					
-				} else {
-					
-					proj.openSequence(currentSequence.sequenceID);
-					this.addAllClipsToMediaEncoderQueue(currentSequence);
-					// for every sequence in found pattern
-				}
+				if(proj.sequences.numSequences > 0){
+
+					var sequencesFound = [];
+					var toFind = config.searchPattern.toLowerCase();
+					var currentSequenceName;
+
+					for(var i = 0; i < proj.sequences.numSequences; i++){
+						currentSequenceName = proj.sequences[i].name.toLowerCase();
+						if(currentSequenceName.search(toFind) >= 0){
+							sequencesFound.push(proj.sequences[i]);
+						}
+					}
+
+					if(sequencesFound.length < 1){
+						alert("No matches found");
+					return 0;
+					}
+
+					if(config.type == "Clips"){
+						for(var j = 0; j < sequencesFound.length; j++){
+							currentSequence = sequencesFound[j];
+							proj.openSequence(currentSequence.sequenceID);
+							this.addAllClipsToMediaEncoderQueue(currentSequence);
+						}
+					} else {
+						var numOn;
+						for(var j = 0; j < sequencesFound.length; j++){
+							currentSequence = sequencesFound[j];
+							proj.openSequence(currentSequence.sequenceID);
+							numOn = config.numOn == true ? numOn = j : -1;
+							this.addToExportAllCurrentSequenceDuration(currentSequence,numOn);
+						};
+					} 
+		
+			} else {
+				alert("This project doesn't contain any sequences");
+			} 
 			} else {
 				if(config.type == "Clips"){
 					if(proj.sequences.numSequences > 0){
@@ -43,7 +67,7 @@ $.runScript = {
 							numOn = config.numOn == true ? numOn = i : -1;
 							currentSequence = proj.sequences[i]; 
 							proj.openSequence(currentSequence.sequenceID);
-							this.addToExportAllcurrentSequenceDuration(currentSequence,i);
+							this.addToExportAllCurrentSequenceDuration(currentSequence,numOn);
 						}
 					} else{
 						alert("This project doesn't contain any sequences");
@@ -51,10 +75,8 @@ $.runScript = {
 				}
 			}
 		}
-		
-		return uniqueExport;
 	},
-	addToExportAllcurrentSequenceDuration: function(localSequence,localIteration){
+	addToExportAllCurrentSequenceDuration: function(localSequence,localIteration){
 		var clipIn, clipOut;
 		var availableTracks = localSequence.videoTracks;
 		if(localSequence){
@@ -90,7 +112,7 @@ $.runScript = {
 		
 		var clipIn, clipOut;
 		var availableTracks = localSequence.videoTracks;
-		
+		var uniqueExport = 0;
 
 		if(localSequence){
 			if(availableTracks.length > 0){
@@ -171,7 +193,11 @@ $.runScript = {
 			}
 		
 		if(config.filesName != null && config.filesName != ""){
+			if(config.applyFor != "Current_sequence" && config.applyFor != null){
+			renderFileName = currentSequence.name + "_" + config.filesName + iteration; 
+			} else {
 			renderFileName = config.filesName + iteration;
+		}
 		} else {
 			renderFileName = currentSequence.name + iteration;
 		}
