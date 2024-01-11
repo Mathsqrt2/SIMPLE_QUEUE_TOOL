@@ -8,7 +8,7 @@ $.runScript = {
 			if(config.type == "Clips"){
 				this.addAllClipsToMediaEncoderQueue(currentSequence);
 			} else {
-				// add only current sequence
+				this.addToExportAllcurrentSequenceDuration(currentSequence,-1);
 			}
 		} else {
 			// for Multiple_sequences
@@ -30,9 +30,37 @@ $.runScript = {
 		}
 
 	},
-	addToExportAllcurrentSequenceDuration: function(localSequence){
+	addToExportAllcurrentSequenceDuration: function(localSequence,localIteration){
 		var clipIn, clipOut;
 		var availableTracks = localSequence.videoTracks;
+		if(localSequence){
+			if(availableTracks.length > 0){
+				if(availableTracks[0].clips.length > 0){
+					clipIn = availableTracks[0].clips[0].start.seconds;
+					clipOut = availableTracks[0].clips[0].end.seconds;
+
+					for(var i = 0; i < availableTracks.length; i++){
+						for(var j = 0; j < availableTracks[i].clips.length; j++){
+							if(availableTracks[i].clips[j].start.seconds < clipIn){
+								clipIn = availableTracks[i].clips[j].start.seconds;
+							} if(availableTracks[i].clips[j].end.seconds > clipOut){
+								clipOut = availableTracks[i].clips[j].end.seconds;
+							}
+						}
+					}
+
+					this.trimArea(clipIn,clipOut);
+					this.addToAME(localIteration);
+
+				} else{
+					alert("sequences is empty!");
+				}
+			} else{
+				alert("video tracks missing!");
+			}			
+		} else {
+			alert("Specified sequence doesn't exist!");
+		}
 	},
 
 
@@ -42,38 +70,41 @@ $.runScript = {
 		var availableTracks = localSequence.videoTracks;
 		var uniqueExport = 0;
 
-		if(config.basedOn == "Each clip"){
-			// based on every clip in sequence
-			if(localSequence){
-				for(var i = 0; i < availableTracks.length; i++){
-					this.secureTracks(availableTracks,1);
-				
-					availableTracks[i].setMute(0);
-					availableTracks[i].setLocked(0);
-	
-					for(var l = 0; l < availableTracks[i].clips.length; l++){
-						clipIn = availableTracks[i].clips[l].start.seconds;
-						clipOut = availableTracks[i].clips[l].end.seconds;
-						this.trimArea(clipIn,clipOut);
-						this.addToAME(uniqueExport++);
-					}
-				}
-				this.secureTracks(availableTracks,0);
-			}
-
-		} else {
-			// based on clips from specified track
-			if(localSequence && config.basedOnIndex < availableTracks.length){
-				this.secureTracks(availableTracks,0);
-				for(var i = 0; i < availableTracks[config.basedOnIndex].clips.length; i++){
-					clipIn = availableTracks[config.basedOnIndex].clips[i].start.seconds;
-					clipOut = availableTracks[config.basedOnIndex].clips[i].end.seconds;
-					this.trimArea(clipIn,clipOut);
-					this.addToAME(uniqueExport++);
+		if(localSequence){
+			if(availableTracks.length > 0){
+				if(config.basedOn == "Each clip"){
+						for(var i = 0; i < availableTracks.length; i++){
+							this.secureTracks(availableTracks,1);
+						
+							availableTracks[i].setMute(0);
+							availableTracks[i].setLocked(0);
+			
+							for(var l = 0; l < availableTracks[i].clips.length; l++){
+								clipIn = availableTracks[i].clips[l].start.seconds;
+								clipOut = availableTracks[i].clips[l].end.seconds;
+								this.trimArea(clipIn,clipOut);
+								this.addToAME(uniqueExport++);
+							}
+						}
+						this.secureTracks(availableTracks,0);
+				} else {
+					if(config.basedOnIndex < availableTracks.length){
+						this.secureTracks(availableTracks,0);
+						for(var i = 0; i < availableTracks[config.basedOnIndex].clips.length; i++){
+							clipIn = availableTracks[config.basedOnIndex].clips[i].start.seconds;
+							clipOut = availableTracks[config.basedOnIndex].clips[i].end.seconds;
+							this.trimArea(clipIn,clipOut);
+							this.addToAME(uniqueExport++);
+						}
+					} else {
+						alert("track with specified index doesn't exist");
+					}	
 				}
 			} else {
-				alert("track with specified index doesn't exist");
-			}	
+				alert("video tracks missing!")
+			}
+		} else {
+			alert("Specified sequence doesn't exists!");
 		}
 	},
 
@@ -106,7 +137,9 @@ $.runScript = {
 	},
 	fileOutputPath: function(currentIteration){
 		var iteration, renderFileName;
-			if(currentIteration <= 9){
+			if(currentIteration < 0){
+				iteration = "";
+			} else if(currentIteration <= 9){
 				iteration = "000" + currentIteration;
 			} else if(currentIteration > 9 && currentIteration <= 99){
 				iteration = "00" + currentIteration;
