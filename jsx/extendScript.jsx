@@ -1,13 +1,16 @@
 var outputFolderPath = "";
 var newCustomEncodingPresetPath = "";
 var newDirectoryName;
+var newPluginPath;
+
 $.runScript = {
 	processRequest: function(userConfig){
 		proj = app.project;
 		config = JSON.parse(userConfig);
 		newDirectoryName = config.folderName;
 		currentSequence = proj.activeSequence;
-		
+		newPluginPath = this.fixPath();
+
 		if(config.applyFor == "Current_sequence"){
 			if(config.type == "Clips"){
 				this.addAllClipsToMediaEncoderQueue(currentSequence);
@@ -168,9 +171,9 @@ $.runScript = {
 	exportingPreset: function(mode){
 		var outPresetPath;
 		if(config.encodingPreset == "h.264 | .mp4"){
-			outPresetPath = "C:\\Program Files (x86)\\Common Files\\Adobe\\CEP\\extensions\\simpleRenderQueue\\lib\\basic_h264.epr";
+			outPresetPath = newPluginPath + "\\lib\\basic_h264.epr";
 		} else if (config.encodingPreset == "vp9 | .webm"){
-			outPresetPath = "C:\\Program Files (x86)\\Common Files\\Adobe\\CEP\\extensions\\simpleRenderQueue\\lib\\basic_vp9.epr";
+			outPresetPath = newPluginPath + "\\lib\\basic_vp9.epr";
 		} else {
 			if(newCustomEncodingPresetPath != ""){
 			outPresetPath = newCustomEncodingPresetPath.fsName;
@@ -230,6 +233,13 @@ $.runScript = {
 			return "";
 		}
 	},
+	fixPath: function(){
+		var newPath = config.pluginPath;
+		while(newPath.indexOf("/") > 0){
+			newPath = newPath.replace('/','\\');		
+		}
+		return newPath;
+	},
 	addToAME: function(nameIterator){		
 			var newFileName = this.fileOutputPath(nameIterator) + this.exportingPreset();
 			var outputFilePath;
@@ -245,7 +255,7 @@ $.runScript = {
 						}
 				}
 			app.encoder.encodeSequence(currentSequence,outputFilePath,this.exportingPreset(1),app.encoder.ENCODE_IN_TO_OUT,0);
-	}
+	},
 }
 function getFolderPath(){
 	outputFolderPath = Folder.selectDialog("choose the output directory");
