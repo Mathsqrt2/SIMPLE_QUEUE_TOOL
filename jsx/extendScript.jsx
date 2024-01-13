@@ -1,4 +1,5 @@
 var outputFolderPath = "";
+var newCustomEncodingPresetPath = "";
 $.runScript = {
 	processRequest: function(userConfig){
 		proj = app.project;
@@ -169,7 +170,12 @@ $.runScript = {
 		} else if (config.encodingPreset == "vp9 | .webm"){
 			outPresetPath = "C:\\Program Files (x86)\\Common Files\\Adobe\\CEP\\extensions\\simpleRenderQueue\\lib\\basic_vp9.epr";
 		} else {
-			outPresetPath = config.customEncodingPresetPath;
+			if(newCustomEncodingPresetPath != ""){
+			outPresetPath = newCustomEncodingPresetPath.fsName;
+			} else {
+				alert("You haven't chosen any preset path")
+			}
+
 		}
 		var outPreset = new File(outPresetPath);
 		var outFormExt = currentSequence.getExportFileExtension(outPreset.fsName);
@@ -229,4 +235,7 @@ $.runScript = {
 }
 function getFolderPath(){
 	outputFolderPath = Folder.selectDialog("choose the output directory");
+}
+function getNewPreset(){
+	newCustomEncodingPresetPath = File.openDialog("choose file");
 }
