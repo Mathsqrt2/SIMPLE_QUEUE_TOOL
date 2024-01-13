@@ -1,3 +1,4 @@
+var outputFolderPath = "";
 $.runScript = {
 	processRequest: function(userConfig){
 		proj = app.project;
@@ -205,8 +206,8 @@ $.runScript = {
 		return renderFileName;		
 	},
 	outputDirectoryPath: function(){
-		if(config.outputPath != null && config.outputPath != ""){
-			return config.outputPath;
+		if(outputFolderPath != null && outputFolderPath != "" && outputFolderPath != undefined){
+			return outputFolderPath.fsName;
 		} else {
 			return app.project.path.substr(0,app.project.path.length - app.project.name.length); 
 		}
@@ -225,4 +226,7 @@ $.runScript = {
 				}
 			app.encoder.encodeSequence(currentSequence,outputFilePath,this.exportingPreset(1),app.encoder.ENCODE_IN_TO_OUT,0);
 	}
+}
+function getFolderPath(){
+	outputFolderPath = Folder.selectDialog("choose the output directory");
 }
