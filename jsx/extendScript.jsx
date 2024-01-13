@@ -1,11 +1,13 @@
 var outputFolderPath = "";
 var newCustomEncodingPresetPath = "";
+var newDirectoryName;
 $.runScript = {
 	processRequest: function(userConfig){
 		proj = app.project;
 		config = JSON.parse(userConfig);
+		newDirectoryName = config.folderName;
 		currentSequence = proj.activeSequence;
-
+		
 		if(config.applyFor == "Current_sequence"){
 			if(config.type == "Clips"){
 				this.addAllClipsToMediaEncoderQueue(currentSequence);
@@ -175,7 +177,6 @@ $.runScript = {
 			} else {
 				alert("You haven't chosen any preset path")
 			}
-
 		}
 		var outPreset = new File(outPresetPath);
 		var outFormExt = currentSequence.getExportFileExtension(outPreset.fsName);
@@ -212,15 +213,28 @@ $.runScript = {
 		return renderFileName;		
 	},
 	outputDirectoryPath: function(){
-		if(outputFolderPath != null && outputFolderPath != "" && outputFolderPath != undefined){
+		if(outputFolderPath.fsName != null && outputFolderPath.fsName != "" && outputFolderPath.fsName != undefined){
 			return outputFolderPath.fsName;
 		} else {
 			return app.project.path.substr(0,app.project.path.length - app.project.name.length); 
 		}
 	},
+	prepareNewFolder: function(outPath){
+		if(newDirectoryName != undefined && newDirectoryName != null && newDirectoryName != ""){
+			var f = new Folder(outPath + "/" + newDirectoryName);
+			if(!f.exists){
+				f.create();
+			} 
+			return newDirectoryName + "/";
+		} else{
+			return "";
+		}
+	},
 	addToAME: function(nameIterator){		
 			var newFileName = this.fileOutputPath(nameIterator) + this.exportingPreset();
-			var outputFilePath = this.outputDirectoryPath() + '\\' + newFileName;
+			var outputFilePath;
+
+			outputFilePath = this.outputDirectoryPath() + '\\' + this.prepareNewFolder(this.outputDirectoryPath()) + newFileName;
 
 			var checkIfExists = new File(outputFilePath);
 				if(outputFilePath.exists){
@@ -237,5 +251,5 @@ function getFolderPath(){
 	outputFolderPath = Folder.selectDialog("choose the output directory");
 }
 function getNewPreset(){
-	newCustomEncodingPresetPath = File.openDialog("choose file");
+	newCustomEncodingPresetPath = File.openDialog("choose preset","Required: *.epr*",true);
 }
