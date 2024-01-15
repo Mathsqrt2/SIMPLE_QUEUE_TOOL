@@ -1,0 +1,64 @@
+#app_content{
+    height: 100%;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+    padding-top: 12px;
+}
+
+.property_box{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 12px;
+    width: 450px;
+    background-color: #1A1A1A;
+    border-radius: 32px;
+    box-shadow: 0px 0px 6px rgba(235, 235, 235, 0.10);
+}
+
+.property_content{
+    margin-right: 20px;
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+}
+
+.property_label{
+    font-family: montserrat;
+    font-size: 14px;
+    font-weight: 800;
+    margin-left: 20px;
+}
+
+.collector{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.property_input, select{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    text-align: left;
+    color: #eeeeee;
+    width: 175px;
+    display: block;
+    background-color: #303030;
+    border: none;
+}
+
+label{
+    font-family: montserrat;
+    font-weight: 300;
+    font-size: 14px;
+}

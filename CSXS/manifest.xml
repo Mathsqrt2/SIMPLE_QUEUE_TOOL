@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ExtensionManifest Version="6.0" ExtensionBundleId="RenderQueueTool" ExtensionBundleVersion="11.1"
-ExtensionBundleName="RenderQueueTool" 
+<ExtensionManifest Version="6.0" ExtensionBundleId="SIMPLE QUEUE TOOL" ExtensionBundleVersion="11.1"
+ExtensionBundleName="SIMPLE QUEUE TOOL" 
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<ExtensionList>
-		<Extension Id="RenderQueueTool" Version="10.3.0"/>
+		<Extension Id="SIMPLE QUEUE TOOL" Version="10.3.0"/>
 	</ExtensionList>
 	<ExecutionEnvironment>
 		<HostList>
@@ -18,7 +18,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	</ExecutionEnvironment>
 
 	<DispatchInfoList>
-		<Extension Id="RenderQueueTool">
+		<Extension Id="SIMPLE QUEUE TOOL">
 			<DispatchInfo >
 				<Resources>
 					<MainPath>./index.html</MainPath>
@@ -34,7 +34,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 				</Lifecycle>
 				<UI>
 					<Type>Panel</Type>
-					<Menu>RenderQueueTool</Menu>
+					<Menu>SIMPLE QUEUE TOOL</Menu>
 					<Geometry>
 						<Size>
 							<Height>300</Height>

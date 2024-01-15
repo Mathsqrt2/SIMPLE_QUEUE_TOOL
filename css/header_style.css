@@ -1,0 +1,17 @@
+#app_header{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: baseline;
+    
+    width: 100%;
+    background-color: #151515;
+    
+    font-family: montserrat;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+#app_title{
+    margin-left: 30px;
+}

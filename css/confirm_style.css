@@ -1,0 +1,28 @@
+#confirm_section{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    padding-bottom: 20px;
+}
+
+#confirm{
+    font-family: montserrat;
+    font-weight: 700;
+    font-size: 16px;
+    height: fit-content;
+    width: fit-content;
+
+    background-color: #1b7e2c;
+    padding: 0px 24px;
+
+    border-radius: 30px;
+    transition: all 0.15s ease-in-out;
+
+}
+
+#confirm:hover{
+    background-color: #30C448;
+    transform: scale(0.95,0.95);
+}
