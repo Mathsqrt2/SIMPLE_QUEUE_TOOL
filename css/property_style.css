@@ -7,27 +7,26 @@
 
     justify-content: center;
     align-items: center;
-    padding-top: 12px;
+    padding-top: 10px;
 }
 
 .property_box{
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     align-items: center;
-
-    margin-bottom: 12px;
-    width: 450px;
+    justify-content: space-between;
+    margin-bottom: 6px;
+    width: 430px;
     background-color: #1A1A1A;
     border-radius: 32px;
     box-shadow: 0px 0px 6px rgba(235, 235, 235, 0.10);
 }
 
 .property_content{
-    margin-right: 20px;
-    height: fit-content;
     display: flex;
+    margin-right: 25px;
     flex-direction: row;
+    align-self: center;
 }
 
 .property_label{
@@ -35,6 +34,13 @@
     font-size: 14px;
     font-weight: 800;
     margin-left: 20px;
+    width: 190px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    
 }
 
 .collector{
@@ -44,21 +50,36 @@
     justify-content: center;
 }
 
-.property_input, select{
+.property_input, select, input{
+    font-family: montserrat;
+    font-weight: 300;
+    font-size: 13px;
+
     display: flex;
     justify-content: center;
     align-items: center;
 
     text-align: left;
     color: #eeeeee;
-    width: 175px;
+    width: 170px;
     display: block;
     background-color: #303030;
     border: none;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.1s ease-in-out;
+    
 }
 
 label{
     font-family: montserrat;
     font-weight: 300;
     font-size: 14px;
+}
+
+input::placeholder{
+    color: #999999;
+}
+
+#newOutputPath:hover{
+    transform: scale(0.95,0.95);
 }

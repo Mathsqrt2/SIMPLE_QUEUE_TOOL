@@ -21,9 +21,10 @@
             <div class="property_box">
                 <div class="property_label">
                     <p>RENDER TYPE:</p>
-                </div>
-                <div class="property_content">
                     <div class="separator_vertical"></div>
+                </div>
+                
+                <div class="property_content">
                     <select id="typeOfRenderingQueue">
                         <option>clips</option>
                         <option>sequences</option>
@@ -31,111 +32,129 @@
                 </div>
             </div>
 
-            <div class=" property_box checkboxHolder">
+            <div class="property_box">
                 <div class="property_label">
-                    <p>SEQUENCES NUMERATION:</p>
-                </div>
-                <div class="property_content">
+                    <p>ADD INDEX TO NAME:</p>
                     <div class="separator_vertical"></div>
+                </div>
+                
+                <div class="property_content">
                     <div class="property_input">
-                        <label for="numOn">attach index</label>
-                        <input type="checkbox" id="numOn">
+                        <select id="numOn" class="property_input">
+                            <option>yes</option>
+                            <option>no</option>
+                        </select>
                     </div>
                 </div>
             </div>
 
             <div class="property_box">
                 <div class="property_label">
-                    <p id="fieldLabel">RENDERING BASED ON:</p>
+                    <p id="fieldLabel">RENDERING BASE:</p>
+                    <div class="separator_vertical"></div>
                 </div>
                 <div class="property_content">
-                    <div class="separator_vertical"></div>
                     <select id="basedOn">
                         <option>each clip</option>
                         <option>clips on track</option>
                         <option>selected clips</option>
-                        <input id="baseIndex" type="number" placeholder="base track index" min="0" class="hidden" disabled>
                     </select>
                 </div>
             </div>
 
             <div class="property_box">
-                <div class="property_label" class="hidden" id="numOnLabel">
-                    <p>APPLY FOR:</p>
+                <div class="property_label">
+                    <p id="trackIndexLabel">TRACK INDEX:</p>
+                    <div class="separator_vertical"></div>
                 </div>
                 <div class="property_content">
+                    <input id="baseIndex" type="number" placeholder="base track index" min="0" max="10">
+                </div>
+            </div>
+
+            <div class="property_box">
+                <div class="property_label" id="numOnLabel">
+                    <p>APPLY FOR:</p>
                     <div class="separator_vertical"></div>
+                </div>
+                <div class="property_content">
                     <select id="rangeOfRenderingQueue">
-                        <option>current_sequence</option>
-                        <option>multiple_sequences</option>
+                        <option>current sequence</option>
+                        <option>multiple sequences</option>
                         <option>selected sequences</option>
                     </select>
                 </div>
             </div>
 
-            <div class="property_box hidden" id="searchContainer">
+
+
+            <div class="property_box " id="searchContainer">
                 <div class="property_label">
-                    <p>SEARCH SEQUENCE PATTERN:</p>
+                    <p>SEARCH PATTERN:</p>
+                    <div class="separator_vertical"></div>
                 </div>
                 <div class="property_content">
-                    <div class="separator_vertical"></div>
-                    <input type='text' id="searchedValue" placeholder="choose sequences" class="hidden" disabled> 
+                    <input type='text' id="searchedValue" placeholder="choose sequences" class="property_input" disabled> 
                 </div>
             </div>
 
             <div class="property_box">
                 <div class="property_label">
-                    <p>ENCODING PRESET</p>
+                    <p>ENCODING PRESET:</p>
+                    <div class="separator_vertical"></div>
                 </div>
                 <div class="property_content">
-                    <div class="separator_vertical"></div>
+                    
                     <div class="collector">
-                    <select id="encodingPreset">
-                        <option>h.264 | .mp4</option>
-                        <option>vp9 | .webm</option>
-                        <option>custom</option>
-                    </select>
-                    <input type="button" id="selectPresetPath" value="select preset" class="hidden" disabled>
+                        <select id="encodingPreset">
+                            <option>h.264 | .mp4</option>
+                            <option>vp9 | .webm</option>
+                            <option>custom</option>
+                        </select>
+                        <input type="button" id="selectPresetPath" value="select preset" class="hidden property_input" disabled>
                     </div>
                 </div>
             </div>
 
             <div class="property_box">
                 <div class="property_label">
-                    <p>OUTPUT DIRECTORY</p>
+                    <p>OUTPUT DIRECTORY:</p>
+                    <div class="separator_vertical"></div>
                 </div>
                 <div class="property_content">
-                    <div class="separator_vertical"></div>
+                    
                     <input type="button" value="set output path" id="newOutputPath" class="property_input">
                 </div>
             </div>
 
             <div class="property_box">
                 <div class="property_label">
-                    <p>NEW FOLDER NAME</p>
-                </div>
-                <div class="property_content">
+                    <p>NEW FOLDER NAME:</p>
                     <div class="separator_vertical"></div>
+                </div>
+                
+                <div class="property_content">
                     <input type="text" id="newFolderName" placeholder="new folder name" class="property_input">
                 </div>
             </div>
 
             <div class="property_box">
                 <div class="property_label">
-                    <p>NEW NAMES PATTERN</p>
-                </div>
-                <div class="property_content">
+                    <p>OUTPUT NAME:</p>
                     <div class="separator_vertical"></div>
+                </div>
+                
+                <div class="property_content">
                     <input type="text" id="newNamePattern" placeholder="set files name pattern" class="property_input">
                 </div>
             </div>
 
             <div class="property_box">
                 <div class="property_label">
-                    <p>INDEX OFFSET</p>
+                    <p>INDEX OFFSET:</p>
+                    <div class="separator_vertical"></div>
                 </div>
                 <div class="property_content">
-                    <div class="separator_vertical"></div>
                     <input type="number" id="indexOffset" placeholder="index offset" min="0" max="9000" class="property_input">
                 </div>
             </div>

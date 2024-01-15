@@ -3,6 +3,7 @@
 *{
     user-select: none;
 }
+
 body{
     color: #eeeeee;
     margin: 0;
@@ -22,8 +23,9 @@ body{
 }
 
 .separator_vertical{
-    background-color: #30C448;
-    width: 3px;
+    background-color: #2aa73f;
+    height: 35px;
+    width: 2px;
 }
 
 .hidden{
