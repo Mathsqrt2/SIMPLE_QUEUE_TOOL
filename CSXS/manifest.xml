@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ExtensionManifest Version="6.0" ExtensionBundleId="SIMPLE QUEUE TOOL" ExtensionBundleVersion="11.1"
-ExtensionBundleName="SIMPLE QUEUE TOOL" 
+<ExtensionManifest Version="6.0" ExtensionBundleId="SIMPLE_QUEUE_TOOL" ExtensionBundleVersion="11.1"
+ExtensionBundleName="SIMPLE_QUEUE_TOOL" 
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<ExtensionList>
-		<Extension Id="SIMPLE QUEUE TOOL" Version="10.3.0"/>
+		<Extension Id="SIMPLE_QUEUE_TOOL" Version="10.3.0"/>
 	</ExtensionList>
 	<ExecutionEnvironment>
 		<HostList>
@@ -18,7 +18,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	</ExecutionEnvironment>
 
 	<DispatchInfoList>
-		<Extension Id="SIMPLE QUEUE TOOL">
+		<Extension Id="SIMPLE_QUEUE_TOOL">
 			<DispatchInfo >
 				<Resources>
 					<MainPath>./index.html</MainPath>
