@@ -170,17 +170,40 @@ $.runScript = {
 	},
 	exportingPreset: function(mode){
 		var outPresetPath;
-		if(config.encodingPreset == "h.264 | .mp4"){
-			outPresetPath = newPluginPath + "\\lib\\basic_h264.epr";
-		} else if (config.encodingPreset == "vp9 | .webm"){
-			outPresetPath = newPluginPath + "\\lib\\basic_vp9.epr";
-		} else {
-			if(newCustomEncodingPresetPath != ""){
-			outPresetPath = newCustomEncodingPresetPath.fsName;
-			} else {
-				alert("You haven't chosen any preset path")
-			}
+
+		switch(config.encodingPreset){
+			case "h.264 | 64mbps | 384kbps":
+				outPresetPath = newPluginPath + "\\presets\\h264_64mbps_mp4_384kbps.epr";
+				break;
+			case "h.264 | 15mbps | 384kbps":
+				outPresetPath = newPluginPath + "\\presets\\h264_15mbps_mp4_384kbps.epr";
+				break;
+			case "h.264 | 64mbps | no audio":
+				outPresetPath = newPluginPath + "\\presets\\h264_64mbps_mp4_no-audio.epr";
+				break;
+			case "h.264 | 15mbps | no audio":
+				outPresetPath = newPluginPath + "\\presets\\h264_15mbps_mp4_no-audio.epr";
+				break;
+			case "vp9 | quality 60% | 384kbps":
+				outPresetPath = newPluginPath + "\\presets\\vp9_q60_webm_384kbps.epr";
+				break;
+			case "vp9 | quality 90% | 384kbps":
+				outPresetPath = newPluginPath + "\\presets\\vp9_q90_webm_384kbps.epr";
+				break;
+			case "vp9 | quality 60% | no audio":
+				outPresetPath = newPluginPath + "\\presets\\vp9_q60_webm_no-audio.epr";
+				break;
+			case "vp9 | quality 90% | no audio":
+				outPresetPath = newPluginPath + "\\presets\\vp9_q90_webm_no-audio.epr";
+				break;
+			default:
+				if(newCustomEncodingPresetPath != ""){
+					outPresetPath = newCustomEncodingPresetPath.fsName;
+				} else {
+					alert("You haven't chosen any preset path");
+				}
 		}
+
 		var outPreset = new File(outPresetPath);
 		var outFormExt = currentSequence.getExportFileExtension(outPreset.fsName);
 		if(mode == 1){

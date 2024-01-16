@@ -378,7 +378,7 @@
 		<FloatDecimalPlaces>2</FloatDecimalPlaces>
 	</ExporterParam>
 	<ExporterParam ObjectID="18" ClassID="9f049ab7-d48f-43e9-a8ca-4d7f21233625" Version="1">
-		<ParamValue>60</ParamValue>
+		<ParamValue>90</ParamValue>
 		<ParamType>2</ParamType>
 		<ParamOrdinalValue>2</ParamOrdinalValue>
 		<ParamDontSerializeValue>false</ParamDontSerializeValue>

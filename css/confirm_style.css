@@ -7,6 +7,13 @@
     padding-top: 30px;
 }
 
+.confirm-locked{
+    background-color: #4c4c4c !important;
+}
+.confirm-locked{
+    transform: scale(1,1) !important;
+}
+
 #confirm{
     font-family: montserrat;
     font-weight: 700;
@@ -19,10 +26,10 @@
 
     border-radius: 30px;
     transition: all 0.15s ease-in-out;
-
 }
 
 #confirm:hover{
     background-color: #30C448;
     transform: scale(0.95,0.95);
 }
+
