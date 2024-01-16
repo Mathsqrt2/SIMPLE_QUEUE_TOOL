@@ -86,8 +86,6 @@
                 </div>
             </div>
 
-
-
             <div class="property_box " id="searchContainer">
                 <div class="property_label">
                     <p>SEARCH PATTERN:</p>
@@ -107,8 +105,14 @@
                     
                     <div class="collector">
                         <select id="encodingPreset">
-                            <option>h.264 | .mp4</option>
-                            <option>vp9 | .webm</option>
+                            <option>h.264 | 60mbps | 384kbps</option>
+                            <option>h.264 | 15mbps | 384kbps</option>
+                            <option>h.264 | 60mbps | no audio</option>
+                            <option>h.264 | 15mbps | no audio</option>
+                            <option>vp9 | q5 | 384kbps</option>
+                            <option>vp9 | q9 | 384kbps</option>
+                            <option>vp9 | q5 | no audio</option>
+                            <option>vp9 | q9 | no audio</option>
                             <option>custom</option>
                         </select>
                         <input type="button" id="selectPresetPath" value="select preset" class="hidden property_input" disabled>
@@ -118,11 +122,20 @@
 
             <div class="property_box">
                 <div class="property_label">
+                    <p>SET PRESET PATH</p>
+                    <div class="separator_vertical"></div>
+                </div>
+                <div class="property_content">
+                    <input type="button" value="choose preset path" id="newOutputPath" class="property_input">
+                </div>
+            </div>
+
+            <div class="property_box">
+                <div class="property_label">
                     <p>OUTPUT DIRECTORY:</p>
                     <div class="separator_vertical"></div>
                 </div>
                 <div class="property_content">
-                    
                     <input type="button" value="set output path" id="newOutputPath" class="property_input">
                 </div>
             </div>
