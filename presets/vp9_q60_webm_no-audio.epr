@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PremiereData Version="3">
-	<PresetName>vp9_q90_webm_no-audio</PresetName>
+	<PresetName>vp9_q60_webm_no-audio</PresetName>
 	<PresetComments>Custom</PresetComments>
-	<PresetUserComments>vp9_q90_webm_no-audio</PresetUserComments>
+	<PresetUserComments>vp9_q60_webm_no-audio</PresetUserComments>
 	<PresetCreatorApp></PresetCreatorApp>
 	<PresetCreatorPostProc></PresetCreatorPostProc>
 	<ExporterName></ExporterName>
@@ -10,7 +10,7 @@
 	<ExporterFileType>1466262093</ExporterFileType>
 	<ExportParamContainer ObjectRef="1"/>
 	<CaptionParamContainer ObjectRef="287"/>
-	<PresetID>82ed45f1-4096-4bda-8948-27aded064446</PresetID>
+	<PresetID>cb0a2e1f-55ed-4530-bbec-c5d9adaebbf1</PresetID>
 	<DoAudio>false</DoAudio>
 	<DoVideo>true</DoVideo>
 	<DoEmulation>false</DoEmulation>
