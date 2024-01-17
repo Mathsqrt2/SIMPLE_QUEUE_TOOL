@@ -198,6 +198,12 @@ $.runScript = {
 			case "vp9 | quality 90% | no audio":
 				outPresetPath = newPluginPath + "\\presets\\vp9_q90_webm_no-audio.epr";
 				break;
+			case "quicktime | alpha | audio on":
+				outPresetPath = newPluginPath + "\\presets\\qicktime_alpha_with-audio.epr";
+				break;
+			case "quicktime | alpha | audio off":
+				outPresetPath = newPluginPath + "\\presets\\qicktime_alpha_no-audio.epr"; 
+				break;
 			case "custom":
 				if(newCustomEncodingPresetPath != ""){
 					outPresetPath = newCustomEncodingPresetPath.fsName;
