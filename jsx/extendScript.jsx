@@ -11,8 +11,8 @@ $.runScript = {
 		currentSequence = proj.activeSequence;
 		newPluginPath = this.fixPath();
 
-		if(config.applyFor == "Current_sequence"){
-			if(config.type == "Clips"){
+		if(config.applyFor == "current sequence"){
+			if(config.type == "clips"){
 				this.addAllClipsToMediaEncoderQueue(currentSequence);
 			} else {
 				this.addToExportAllCurrentSequenceDuration(currentSequence,-1);
@@ -37,7 +37,7 @@ $.runScript = {
 					return 0;
 					}
 
-					if(config.type == "Clips"){
+					if(config.type == "clips"){
 						for(var j = 0; j < sequencesFound.length; j++){
 							currentSequence = sequencesFound[j];
 							proj.openSequence(currentSequence.sequenceID);
@@ -57,7 +57,7 @@ $.runScript = {
 				alert("This project doesn't contain any sequences");
 			} 
 			} else {
-				if(config.type == "Clips"){
+				if(config.type == "clips"){
 					if(proj.sequences.numSequences > 0){
 						for(var i = 0; i < proj.sequences.numSequences; i++){
 							currentSequence = proj.sequences[i]; 
@@ -123,7 +123,7 @@ $.runScript = {
 
 		if(localSequence){
 			if(availableTracks.length > 0){
-				if(config.basedOn == "Each clip"){
+				if(config.basedOn == "each clip"){
 						for(var i = 0; i < availableTracks.length; i++){
 							this.secureTracks(availableTracks,1);
 						
@@ -196,12 +196,15 @@ $.runScript = {
 			case "vp9 | quality 90% | no audio":
 				outPresetPath = newPluginPath + "\\presets\\vp9_q90_webm_no-audio.epr";
 				break;
-			default:
+			case "custom":
 				if(newCustomEncodingPresetPath != ""){
 					outPresetPath = newCustomEncodingPresetPath.fsName;
 				} else {
 					alert("You haven't chosen any preset path");
+					newCustomEncodingPresetPath = getNewPreset();
+					return 0;
 				}
+				break;
 		}
 
 		var outPreset = new File(outPresetPath);
@@ -228,7 +231,7 @@ $.runScript = {
 			}
 		
 		if(config.filesName != null && config.filesName != ""){
-			if(config.applyFor != "Current_sequence" && config.applyFor != null){
+			if(config.applyFor != "current sequence" && config.applyFor != null){
 			renderFileName = currentSequence.name + "_" + config.filesName + iteration; 
 			} else {
 			renderFileName = config.filesName + iteration;
@@ -277,6 +280,7 @@ $.runScript = {
 							checkIfExists.close();
 						}
 				}
+			
 			app.encoder.encodeSequence(currentSequence,outputFilePath,this.exportingPreset(1),app.encoder.ENCODE_IN_TO_OUT,0);
 	},
 }
@@ -284,5 +288,5 @@ function getFolderPath(){
 	outputFolderPath = Folder.selectDialog("choose the output directory");
 }
 function getNewPreset(){
-	newCustomEncodingPresetPath = File.openDialog("choose preset","Required: *.epr*",true);
+	newCustomEncodingPresetPath = File.openDialog("choose preset","Required: *.epr*",false);
 }
