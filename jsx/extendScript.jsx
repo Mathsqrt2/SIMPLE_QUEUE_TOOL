@@ -2,6 +2,7 @@ var outputFolderPath = "";
 var newCustomEncodingPresetPath = "";
 var newDirectoryName;
 var newPluginPath;
+var formConfiguration;
 
 $.runScript = {
 	processRequest: function(userConfig){
@@ -9,9 +10,14 @@ $.runScript = {
 		config = JSON.parse(userConfig);
 		newDirectoryName = config.folderName;
 		currentSequence = proj.activeSequence;
-		newPluginPath = this.fixPath();
+		newPluginPath = this.fixPath(config.pluginPath);
 
-		if(config.applyFor == "current sequence"){
+		var configSave = new File(config.pluginPath + "\\config\\config.json");
+		configSave.open("w");
+		configSave.write(userConfig);
+		configSave.close();
+
+		if(config.applyFor == "scurrent sequence"){
 			if(config.type == "clips"){
 				this.addAllClipsToMediaEncoderQueue(currentSequence);
 			} else {
@@ -267,8 +273,8 @@ $.runScript = {
 			return "";
 		}
 	},
-	fixPath: function(){
-		var newPath = config.pluginPath;
+	fixPath: function(pathToFix){
+		var newPath = pathToFix;
 		while(newPath.indexOf("/") > 0){
 			newPath = newPath.replace('/','\\');		
 		}
@@ -297,4 +303,16 @@ function getFolderPath(){
 }
 function getNewPreset(){
 	newCustomEncodingPresetPath = File.openDialog("choose preset","Required: *.epr*",false);
+}
+function loadConfiguration(path){
+		var importConfig = new File(path + "\\config\\config.json");
+		var result;
+		if(importConfig.exists){
+			importConfig.open();
+			result = importConfig.read();
+			importConfig.close();
+			return result;
+		} else {
+			return 0;
+		}
 }
