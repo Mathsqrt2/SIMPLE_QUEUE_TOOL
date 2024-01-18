@@ -17,7 +17,7 @@ $.runScript = {
 		configSave.write(userConfig);
 		configSave.close();
 
-		if(config.applyFor == "scurrent sequence"){
+		if(config.applyFor == "current sequence"){
 			if(config.type == "clips"){
 				this.addAllClipsToMediaEncoderQueue(currentSequence);
 			} else {
@@ -301,14 +301,26 @@ $.runScript = {
 function getFolderPath(){
 	outputFolderPath = Folder.selectDialog("choose the output directory");
 }
-function getNewPreset(){
+function getNewPreset(path){
 	newCustomEncodingPresetPath = File.openDialog("choose preset","Required: *.epr*",false);
+
+		newCustomEncodingPresetPath.open("r");
+	var backup = newCustomEncodingPresetPath.read();
+		newCustomEncodingPresetPath.close();
+
+	var actionTimestamp = new Date();
+	var recoveryFile = new File(path + "\\config\\preset_" + actionTimestamp.getTime() + ".epr");
+		recoveryFile.open("w");
+		recoveryFile.write(backup);
+		recoveryFile.close();
+
+
 }
 function loadConfiguration(path){
 		var importConfig = new File(path + "\\config\\config.json");
 		var result;
 		if(importConfig.exists){
-			importConfig.open();
+			importConfig.open("w");
 			result = importConfig.read();
 			importConfig.close();
 			return result;
