@@ -12,7 +12,7 @@ $.runScript = {
 		currentSequence = proj.activeSequence;
 		newPluginPath = this.fixPath(config.pluginPath);
 
-		var configSave = new File(config.pluginPath + "\\config\\config.json");
+		var configSave = new File(newPluginPath + "\\config\\config.json");
 		configSave.open("w");
 		configSave.write(userConfig);
 		configSave.close();
@@ -262,6 +262,15 @@ $.runScript = {
 			return app.project.path.substr(0,app.project.path.length - app.project.name.length); 
 		}
 	},
+	loadPreset: function(path){
+		var customPresetPath = this.fixPath(path) + "\\presets\\dynamic\\user_custom_preset.epr";
+		var presetInstance = new File(customPresetPath);
+		if(presetInstance.exists){
+			newCustomEncodingPresetPath = presetInstance;
+		} else {
+			getNewPreset(path);
+		}
+	},
 	prepareNewFolder: function(outPath){
 		if(newDirectoryName != undefined && newDirectoryName != null && newDirectoryName != ""){
 			var f = new Folder(outPath + "/" + newDirectoryName);
@@ -308,19 +317,21 @@ function getNewPreset(path){
 	var backup = newCustomEncodingPresetPath.read();
 		newCustomEncodingPresetPath.close();
 
-	var actionTimestamp = new Date();
-	var recoveryFile = new File(path + "\\config\\preset_" + actionTimestamp.getTime() + ".epr");
-		recoveryFile.open("w");
-		recoveryFile.write(backup);
-		recoveryFile.close();
-
-
+	var dynamicPresetPath = $.runScript.fixPath(path) + "\\presets\\dynamic\\user_custom_preset.epr";
+	var recoveryFile = new File(dynamicPresetPath);
+		if(dynamicPresetPath.exists){
+			recoveryFile.remove();
+			recoveryFile.close();
+		}
+			recoveryFile.open("w");
+			recoveryFile.write(backup);
+			recoveryFile.close();
 }
 function loadConfiguration(path){
-		var importConfig = new File(path + "\\config\\config.json");
+		var importConfig = new File($.runScript.fixPath(path) + "\\config\\config.json");
 		var result;
 		if(importConfig.exists){
-			importConfig.open("w");
+			importConfig.open("r");
 			result = importConfig.read();
 			importConfig.close();
 			return result;
