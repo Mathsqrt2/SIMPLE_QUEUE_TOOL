@@ -23,7 +23,7 @@ $.runScript = {
 			} else {
 				this.addToExportAllCurrentSequenceDuration(currentSequence,-1);
 			}
-		} else if(config.applyFor == "multiple sequences") {
+		} else {
 			if(config.searchPattern != null){
 				if(proj.sequences.numSequences > 0){
 
@@ -87,9 +87,7 @@ $.runScript = {
 					}
 				}
 			}
-		} else if(config.applyFor == "selected sequences"){
-			
-		}
+		} 
 	},
 	addToExportAllCurrentSequenceDuration: function(localSequence,localIteration){
 		var clipIn, clipOut;
