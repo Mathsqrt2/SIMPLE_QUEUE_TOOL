@@ -1,9 +1,7 @@
 # SIMPLE QUEUE TOOL GUIDE
----
 ## ABOUT
 This project is dedicated to everyone who wants to quickly export many elements, such as when creating stock videos where the primary tasks are trimming each clip and making minor edits. The most time-consuming part is often exporting each one.
 
----
 ## HOW TO USE
 
 This plugin isn't officially available in the Adobe Plugins Store. To use it on your PC, you need to first add a registry entry:
@@ -22,4 +20,4 @@ All files will be working after You paste it in plugins directory:
 ```
 C:\Program Files (x86)\Common Files\Adobe\CEP\extensions
 ```
-The app will be available in Premiere Pro under "Window > Extensions > simpleRenderQueue"
+The app will be available in Premiere Pro under "Window > Extensions > SIMPLE QUEUE TOOL"
