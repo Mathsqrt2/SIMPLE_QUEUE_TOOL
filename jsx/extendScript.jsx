@@ -135,17 +135,18 @@ $.runScript = {
 			currentTrack.setLocked(0);
 
 			for(j = 0; j<currentTrack.clips.length; j++){
-				var currentClip = currentTrack.clips[j];
-				this.selectClipAndAddToExportQueue(currentClip,index++);
+				this.selectClipsAndAddToExportQueue([currentTrack.clips[j]],index++);
 			}
 		}
 		
 		this.secureTracks(tracks,0);
 		return index;
 	},
-	selectClipAndAddToExportQueue: function(clip,index){
-		this.trimArea(clip.start.seconds,clip.end.seconds);
-		this.addToAME(index);
+	selectClipsAndAddToExportQueue: function(clips,index){
+		for(var i = 0; i<clips.length;i++){
+			this.trimArea(clips[i].start.seconds,clips[i].end.seconds);
+			this.addToAME(index);
+		}
 	},
 	addAllClipsToMediaEncoderQueue: function(localSequence){
 		var availableTracks = localSequence.videoTracks;
@@ -156,8 +157,10 @@ $.runScript = {
 					this.processEeachTrack(availableTracks);
 				} else if(config.basedOn == "clips on track"){					
 					if(config.basedOnIndex < availableTracks.length && config.basedOnIndex >= 0){
+						this.secureTracks(availableTracks,1);
 						var currentTrack = [availableTracks[config.basedOnIndex]];
 						this.processEeachTrack(currentTrack);
+						this.secureTracks(availableTracks,0);
 					} else {
 						alert("Track with specified index doesn't exist");
 					}	
@@ -169,16 +172,16 @@ $.runScript = {
 						var currentTrack = availableTracks[i];
 						for(var j = 0; j < currentTrack.clips.length; j++){
 							var currentClip = currentTrack.clips[j];
-
 							if(currentClip.isSelected()){
-								this.selectClipAndAddToExportQueue(currentClip,selectedClipsNumber++);
+								selectedClips.push(currentClip);
+								selectedClipsNumber++;
 							}
 						}
 					}
 					if(!selectedClipsNumber){
 						alert("Please select clips to export");
 					} else {
-						this.processEeachClip(availableTracks);
+						this.selectClipsAndAddToExportQueue(selectedClips);
 					}
 				}
 			} else {
