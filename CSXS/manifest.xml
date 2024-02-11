@@ -7,7 +7,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	</ExtensionList>
 	<ExecutionEnvironment>
 		<HostList>
-			<Host Name="PPRO" Version="9.0" />
+			<Host Name="PPRO" Version="15.4" />
 		</HostList>
 		<LocaleList>
 			<Locale Code="All" />
@@ -26,7 +26,8 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 					<CEFCommandLine>
 						<Parameter>--allow-file-access</Parameter>
 						<Parameter>--allow-file-access-from-files</Parameter>
-						<Parameter>--allow-running-insecure-content</Parameter>
+						<Parameter>--enable-nodejs</Parameter>
+						<Parameter>--mixed-context</Parameter>
 					</CEFCommandLine>
 				</Resources>
 				<Lifecycle>

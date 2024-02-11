@@ -28,6 +28,9 @@
     flex-direction: row;
     align-self: center;
 }
+.property_content:focus{
+    outline: none;
+}
 
 .property_label{
     font-family: montserrat;
@@ -82,4 +85,11 @@ input::placeholder{
 
 #newOutputPath:hover{
     transform: scale(0.95,0.95);
+}
+
+input:focus{
+    outline: none;
+}
+select:focus{
+    outline: none;
 }
