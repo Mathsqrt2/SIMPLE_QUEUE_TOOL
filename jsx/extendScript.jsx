@@ -3,6 +3,7 @@ var newCustomEncodingPresetPath = "";
 var newDirectoryName;
 var newPluginPath;
 var formConfiguration;
+var currentOS;
 
 $.runScript = {
 	processRequest: function(userConfig){
@@ -144,8 +145,9 @@ $.runScript = {
 	},
 	selectClipsAndAddToExportQueue: function(clips,index){
 		for(var i = 0; i<clips.length;i++){
+			var iteration = index == null || index == undefined ? i : index;
 			this.trimArea(clips[i].start.seconds,clips[i].end.seconds);
-			this.addToAME(index);
+			this.addToAME(iteration);
 		}
 	},
 	addAllClipsToMediaEncoderQueue: function(localSequence){
@@ -191,7 +193,6 @@ $.runScript = {
 			alert("Specified sequence doesn't exists!");
 		}
 	},
-
 	secureTracks: function (tracks,mode){
 		for(var i = 0; i < tracks.length; i++){
 			tracks[i].setMute(mode);
@@ -309,11 +310,19 @@ $.runScript = {
 		}
 	},
 	fixPath: function(pathToFix){
-		var newPath = pathToFix;
-		while(newPath.indexOf("/") > 0){
-			newPath = newPath.replace('/','\\');		
+	var newPath = pathToFix;
+		if(!currentOS){
+			while(newPath.indexOf("/") > 0){
+				newPath = newPath.replace('/','\\');		
+			}
+			return newPath;
+		} else {
+			while(newPath.indexOf("\\") > 0){
+				newPath = newPath.replace("\\","/");
+			}
+			return newPath;
 		}
-		return newPath;
+
 	},
 	addToAME: function(nameIterator){		
 			var newFileName = this.fileOutputPath(nameIterator) + this.exportingPreset();
@@ -343,7 +352,7 @@ function getNewPreset(path){
 	var backup = newCustomEncodingPresetPath.read();
 		newCustomEncodingPresetPath.close();
 
-	var dynamicPresetPath = $.runScript.fixPath(path) + "\\presets\\dynamic\\user_custom_preset.epr";
+	var dynamicPresetPath = $.runScript.fixPath(path) + $.runScript.fixPath("\\presets\\dynamic\\user_custom_preset.epr");
 	var recoveryFile = new File(dynamicPresetPath);
 		if(dynamicPresetPath.exists){
 			recoveryFile.remove();
@@ -354,7 +363,7 @@ function getNewPreset(path){
 			recoveryFile.close();
 }
 function loadConfiguration(path){
-		var importConfig = new File($.runScript.fixPath(path) + "\\config\\config.json");
+		var importConfig = new File($.runScript.fixPath(path) + $.runScript.fixPath("\\config\\config.json"));
 		var result;
 		if(importConfig.exists){
 			importConfig.open("r");
@@ -364,4 +373,8 @@ function loadConfiguration(path){
 		} else {
 			return 0;
 		}
+}
+function setOSValue(csinfo){
+	var obj = JSON.parse(csinfo);
+	currentOS = csinfo.index;
 }
