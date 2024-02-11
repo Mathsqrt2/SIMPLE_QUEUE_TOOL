@@ -13,7 +13,7 @@ $.runScript = {
 		currentSequence = proj.activeSequence;
 		newPluginPath = this.fixPath(config.pluginPath);
 
-		var configSave = new File(newPluginPath + "\\config\\config.json");
+		var configSave = new File(newPluginPath + this.fixPath("\\config\\config.json"));
 		configSave.open("w");
 		configSave.write(userConfig);
 		configSave.close();
@@ -208,34 +208,34 @@ $.runScript = {
 
 		switch(config.encodingPreset){
 			case "h.264 | 64mbps | 384kbps":
-				outPresetPath = newPluginPath + "\\presets\\h264_64mbps_mp4_384kbps.epr";
+				outPresetPath = newPluginPath + this.fixPath("\\presets\\h264_64mbps_mp4_384kbps.epr");
 				break;
 			case "h.264 | 15mbps | 384kbps":
-				outPresetPath = newPluginPath + "\\presets\\h264_15mbps_mp4_384kbps.epr";
+				outPresetPath = newPluginPath + this.fixPath("\\presets\\h264_15mbps_mp4_384kbps.epr");
 				break;
 			case "h.264 | 64mbps | no audio":
-				outPresetPath = newPluginPath + "\\presets\\h264_64mbps_mp4_no-audio.epr";
+				outPresetPath = newPluginPath + this.fixPath("\\presets\\h264_64mbps_mp4_no-audio.epr");
 				break;
 			case "h.264 | 15mbps | no audio":
-				outPresetPath = newPluginPath + "\\presets\\h264_15mbps_mp4_no-audio.epr";
+				outPresetPath = newPluginPath + this.fixPath("\\presets\\h264_15mbps_mp4_no-audio.epr");
 				break;
 			case "vp9 | quality 60% | 384kbps":
-				outPresetPath = newPluginPath + "\\presets\\vp9_q60_webm_384kbps.epr";
+				outPresetPath = newPluginPath + this.fixPath("\\presets\\vp9_q60_webm_384kbps.epr");
 				break;
 			case "vp9 | quality 90% | 384kbps":
-				outPresetPath = newPluginPath + "\\presets\\vp9_q90_webm_384kbps.epr";
+				outPresetPath = newPluginPath + this.fixPath("\\presets\\vp9_q90_webm_384kbps.epr");
 				break;
 			case "vp9 | quality 60% | no audio":
-				outPresetPath = newPluginPath + "\\presets\\vp9_q60_webm_no-audio.epr";
+				outPresetPath = newPluginPath + this.fixPath("\\presets\\vp9_q60_webm_no-audio.epr");
 				break;
 			case "vp9 | quality 90% | no audio":
-				outPresetPath = newPluginPath + "\\presets\\vp9_q90_webm_no-audio.epr";
+				outPresetPath = newPluginPath + this.fixPath("\\presets\\vp9_q90_webm_no-audio.epr");
 				break;
 			case "quicktime | alpha | audio on":
-				outPresetPath = newPluginPath + "\\presets\\qicktime_alpha_with-audio.epr";
+				outPresetPath = newPluginPath + this.fixPath("\\presets\\qicktime_alpha_with-audio.epr");
 				break;
 			case "quicktime | alpha | audio off":
-				outPresetPath = newPluginPath + "\\presets\\qicktime_alpha_no-audio.epr"; 
+				outPresetPath = newPluginPath + this.fixPath("\\presets\\qicktime_alpha_no-audio.epr"); 
 				break;
 			case "custom":
 				if(newCustomEncodingPresetPath != ""){
@@ -290,7 +290,7 @@ $.runScript = {
 		}
 	},
 	loadPreset: function(path){
-		var customPresetPath = this.fixPath(path) + "\\presets\\dynamic\\user_custom_preset.epr";
+		var customPresetPath = this.fixPath(path) + this.fixPath("\\presets\\dynamic\\user_custom_preset.epr");
 		var presetInstance = new File(customPresetPath);
 		if(presetInstance.exists){
 			newCustomEncodingPresetPath = presetInstance;
@@ -300,11 +300,11 @@ $.runScript = {
 	},
 	prepareNewFolder: function(outPath){
 		if(newDirectoryName != undefined && newDirectoryName != null && newDirectoryName != ""){
-			var f = new Folder(outPath + "/" + newDirectoryName);
+			var f = new Folder(outPath + this.fixPath("/") + newDirectoryName);
 			if(!f.exists){
 				f.create();
 			} 
-			return newDirectoryName + "/";
+			return newDirectoryName + this.fixPath("/");
 		} else{
 			return "";
 		}
@@ -324,11 +324,12 @@ $.runScript = {
 		}
 
 	},
-	addToAME: function(nameIterator){		
+	addToAME: function(nameIterator){	
+			
 			var newFileName = this.fileOutputPath(nameIterator) + this.exportingPreset();
 			var outputFilePath;
 
-			outputFilePath = this.outputDirectoryPath() + '\\' + this.prepareNewFolder(this.outputDirectoryPath()) + newFileName;
+			outputFilePath = this.outputDirectoryPath() + this.fixPath('\\') + this.prepareNewFolder(this.outputDirectoryPath()) + newFileName;
 
 			var checkIfExists = new File(outputFilePath);
 				if(outputFilePath.exists){
