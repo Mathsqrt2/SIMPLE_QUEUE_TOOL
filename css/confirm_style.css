@@ -33,3 +33,6 @@
     transform: scale(0.95,0.95);
 }
 
+#confirm:focus{
+    outline: none;
+}
