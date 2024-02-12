@@ -237,6 +237,25 @@ $.runScript = {
 			case "quicktime | alpha | audio off":
 				outPresetPath = newPluginPath + this.fixPath("\\presets\\qicktime_alpha_no-audio.epr"); 
 				break;
+			case ".wav | umcompressed | 16 bit | stereo":
+				outPresetPath = newPluginPath + this.fixPath("\\presets\\wav_umcompressed_16bit_stereo.epr"); 
+				break;
+			case ".wav | umcompressed | 24 bit | stereo":
+				outPresetPath = newPluginPath + this.fixPath("\\presets\\wav_umcompressed_24bit_stereo.epr"); 
+				break;
+			case ".wav | umcompressed | 32 bit | stereo":
+				outPresetPath = newPluginPath + this.fixPath("\\presets\\wav_umcompressed_32bit_stereo.epr"); 
+				break;
+			case ".mp3 |  192kbps | 16 bit | stereo":
+				outPresetPath = newPluginPath + this.fixPath("\\presets\\mp3_192kbps_16bit_stereo.epr"); 
+				break;
+			case ".mp3 |  256kbps | 16 bit | stereo":
+				outPresetPath = newPluginPath + this.fixPath("\\presets\\mp3_256kbps_16bit_stereo.epr"); 
+				break;
+			case ".mp3 |  320kbps | 16 bit | stereo":
+				outPresetPath = newPluginPath + this.fixPath("\\presets\\mp3_320kbps_16bit_stereo.epr"); 
+				break;
+			
 			case "custom":
 				if(newCustomEncodingPresetPath != ""){
 					outPresetPath = newCustomEncodingPresetPath.fsName;
@@ -322,10 +341,8 @@ $.runScript = {
 			}
 			return newPath;
 		}
-
 	},
 	addToAME: function(nameIterator){	
-			
 			var newFileName = this.fileOutputPath(nameIterator) + this.exportingPreset();
 			var outputFilePath;
 
@@ -345,6 +362,7 @@ $.runScript = {
 }
 function getFolderPath(){
 	outputFolderPath = Folder.selectDialog("Choose the output directory");
+	return outputFolderPath.fsName;
 }
 function getNewPreset(path){
 	newCustomEncodingPresetPath = File.openDialog("Choose preset","Required: *.epr*",false);

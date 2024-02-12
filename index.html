@@ -58,6 +58,9 @@
                         <option>each clip</option>
                         <option>clips on track</option>
                         <option id="selectedClipOption">selected clips</option>
+                        <option>each clip audio</option>
+                        <option>clip audio on track</option>
+                        <option>selected clips audio</option>
                     </select>
                 </div>
             </div>
@@ -102,16 +105,22 @@
                 </div>
                 <div class="property_content">
                     <select id="encodingPreset">
-                        <option>h.264 | 64mbps | 384kbps</option>
-                        <option>h.264 | 15mbps | 384kbps</option>
-                        <option>h.264 | 64mbps | no audio</option>
-                        <option>h.264 | 15mbps | no audio</option>
-                        <option>vp9 | quality 60% | 384kbps</option>
-                        <option>vp9 | quality 90% | 384kbps</option>
-                        <option>vp9 | quality 60% | no audio</option>
-                        <option>vp9 | quality 90% | no audio</option>
-                        <option>quicktime | alpha | audio on</option>
-                        <option>quicktime | alpha | audio off</option>
+                        <option class="videoFileOption">h.264 | 64mbps | 384kbps</option>
+                        <option class="videoFileOption">h.264 | 15mbps | 384kbps</option>
+                        <option class="videoFileOption">h.264 | 64mbps | no audio</option>
+                        <option class="videoFileOption">h.264 | 15mbps | no audio</option>
+                        <option class="videoFileOption">vp9 | quality 60% | 384kbps</option>
+                        <option class="videoFileOption">vp9 | quality 90% | 384kbps</option>
+                        <option class="videoFileOption">vp9 | quality 60% | no audio</option>
+                        <option class="videoFileOption">vp9 | quality 90% | no audio</option>
+                        <option class="videoFileOption">quicktime | alpha | audio on</option>
+                        <option class="videoFileOption">quicktime | alpha | audio off</option>
+                        <option class="audioFileOption hidden">.wav | umcompressed | 16 bit | stereo</option>
+                        <option class="audioFileOption hidden">.wav | umcompressed | 24 bit | stereo</option>
+                        <option class="audioFileOption hidden">.wav | umcompressed | 32 bit | stereo</option>
+                        <option class="audioFileOption hidden">.mp3 |  192kbps | 16 bit | stereo</option>
+                        <option class="audioFileOption hidden">.mp3 |  256kbps | 16 bit | stereo</option>
+                        <option class="audioFileOption hidden">.mp3 |  320kbps | 16 bit | stereo</option>
                         <option>custom</option>
                     </select>
                 </div>
