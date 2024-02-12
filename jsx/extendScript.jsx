@@ -151,13 +151,22 @@ $.runScript = {
 		}
 	},
 	addAllClipsToMediaEncoderQueue: function(localSequence){
-		var availableTracks = localSequence.videoTracks;
+		var availableTracks;
+		var monit;
 
+		if(config.basedOn == "each clip" || config.basedOn == "clips on track" || config.basedOn == "selected clips"){
+			monit = "Video";
+			availableTracks = localSequence.videoTracks;
+		} else {
+			monit = "Audio";
+			availableTracks = localSequence.audioTracks;
+		}
+		
 		if(localSequence){
 			if(availableTracks.length > 0){
-				if(config.basedOn == "each clip"){
+				if(config.basedOn == "each clip" || config.basedOn == "each clip audio"){
 					this.processEeachTrack(availableTracks);
-				} else if(config.basedOn == "clips on track"){					
+				} else if(config.basedOn == "clips on track" || config.basedOn == "clip audio on track"){					
 					if(config.basedOnIndex < availableTracks.length && config.basedOnIndex >= 0){
 						this.secureTracks(availableTracks,1);
 						var currentTrack = [availableTracks[config.basedOnIndex]];
@@ -166,7 +175,7 @@ $.runScript = {
 					} else {
 						alert("Track with specified index doesn't exist");
 					}	
-				} else if(config.basedOn == "selected clips"){
+				} else if(config.basedOn == "selected clips" || config.basedOn == "selected clips audio"){
 					var selectedClipsNumber = 0;
 					var selectedClips = [];
 
@@ -187,7 +196,8 @@ $.runScript = {
 					}
 				}
 			} else {
-				alert("Video tracks missing!")
+
+				alert(monit + " tracks missing!");
 			}
 		} else {
 			alert("Specified sequence doesn't exists!");
