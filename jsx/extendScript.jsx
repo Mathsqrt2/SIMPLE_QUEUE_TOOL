@@ -4,6 +4,7 @@ var newDirectoryName;
 var newPluginPath;
 var formConfiguration;
 var currentOS;
+var isSecurityEnabled = true;
 
 $.runScript = {
 	processRequest: function(userConfig){
@@ -204,9 +205,11 @@ $.runScript = {
 		}
 	},
 	secureTracks: function (tracks,mode){
-		for(var i = 0; i < tracks.length; i++){
-			tracks[i].setMute(mode);
-			tracks[i].setLocked(mode);
+		if(isSecurityEnabled){
+			for(var i = 0; i < tracks.length; i++){
+				tracks[i].setMute(mode);
+				tracks[i].setLocked(mode);
+			}
 		}
 	},
 	trimArea: function(inp,oup){
@@ -339,7 +342,7 @@ $.runScript = {
 		}
 	},
 	fixPath: function(pathToFix){
-	var newPath = pathToFix;
+		var newPath = pathToFix;
 		if(!currentOS){
 			while(newPath.indexOf("/") > 0){
 				newPath = newPath.replace('/','\\');		
@@ -353,21 +356,21 @@ $.runScript = {
 		}
 	},
 	addToAME: function(nameIterator){	
-			var newFileName = this.fileOutputPath(nameIterator) + this.exportingPreset();
-			var outputFilePath;
+		var newFileName = this.fileOutputPath(nameIterator) + this.exportingPreset();
+		var outputFilePath;
 
-			outputFilePath = this.outputDirectoryPath() + this.fixPath('\\') + this.prepareNewFolder(this.outputDirectoryPath()) + newFileName;
+		outputFilePath = this.outputDirectoryPath() + this.fixPath('\\') + this.prepareNewFolder(this.outputDirectoryPath()) + newFileName;
 
-			var checkIfExists = new File(outputFilePath);
-				if(outputFilePath.exists){
-					var destroyCurrent = confirm("A file with that name already exist: Do You want to overwrite?",false,"are You sure?");
-						if(destroyCurrent){
-							checkIfExists.remove();
-							checkIfExists.close();
-						}
-				}
-			
-			app.encoder.encodeSequence(currentSequence,outputFilePath,this.exportingPreset(1),app.encoder.ENCODE_IN_TO_OUT,0);
+		var checkIfExists = new File(outputFilePath);
+			if(outputFilePath.exists){
+				var destroyCurrent = confirm("A file with that name already exist: Do You want to overwrite?",false,"are You sure?");
+					if(destroyCurrent){
+						checkIfExists.remove();
+						checkIfExists.close();
+					}
+			}
+		
+		app.encoder.encodeSequence(currentSequence,outputFilePath,this.exportingPreset(1),app.encoder.ENCODE_IN_TO_OUT,0);
 	},
 }
 function getFolderPath(){
@@ -406,4 +409,8 @@ function loadConfiguration(path){
 function setOSValue(csinfo){
 	var obj = JSON.parse(csinfo);
 	currentOS = csinfo.index;
+}
+function checkSecurityStatus(inputValue){
+	var val = JSON.parse(inputValue);
+	isSecurityEnabled = val.status;
 }
