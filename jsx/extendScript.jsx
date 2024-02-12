@@ -18,7 +18,7 @@ $.runScript = {
 		configSave.open("w");
 		configSave.write(userConfig);
 		configSave.close();
-
+	
 		if(config.applyFor == "current sequence"){
 			if(config.type == "clips"){
 				this.addAllClipsToMediaEncoderQueue(currentSequence);
@@ -96,11 +96,11 @@ $.runScript = {
 		var availableTracks = localSequence.videoTracks;
 		if(localSequence){
 			if(availableTracks.length > 0){
-			var firstClip = availableTracks[0].clips
+			var firstClip = availableTracks[0].clips;
 				if(firstClip.length > 0){
-					clipIn = firstClip.start.seconds;
-					clipOut = firstClip.end.seconds;
-
+					clipIn = firstClip[0].start.seconds;
+					clipOut = firstClip[0].end.seconds;
+					
 					for(var i = 0; i < availableTracks.length; i++){
 					var currentTrack = availableTracks[i];
 						for(var j = 0; j < currentTrack.clips.length; j++){
@@ -117,7 +117,7 @@ $.runScript = {
 					this.addToAME(localIteration);
 
 				} else{
-					alert("sequences is empty!");
+					alert("sequence is empty!");
 				}
 			} else{
 				alert("video tracks missing!");
@@ -218,7 +218,6 @@ $.runScript = {
 	},
 	exportingPreset: function(mode){
 		var outPresetPath;
-
 		switch(config.encodingPreset){
 			case "h.264 | 64mbps | 384kbps":
 				outPresetPath = newPluginPath + this.fixPath("\\presets\\h264_64mbps_mp4_384kbps.epr");
