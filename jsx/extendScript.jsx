@@ -258,13 +258,13 @@ $.runScript = {
 			case ".wav | umcompressed | 32 bit | stereo":
 				outPresetPath = newPluginPath + this.fixPath("\\presets\\wav_umcompressed_32bit_stereo.epr"); 
 				break;
-			case ".mp3 |  192kbps | 16 bit | stereo":
+			case ".mp3 | 192kbps | 16 bit | stereo":
 				outPresetPath = newPluginPath + this.fixPath("\\presets\\mp3_192kbps_16bit_stereo.epr"); 
 				break;
-			case ".mp3 |  256kbps | 16 bit | stereo":
+			case ".mp3 | 256kbps | 16 bit | stereo":
 				outPresetPath = newPluginPath + this.fixPath("\\presets\\mp3_256kbps_16bit_stereo.epr"); 
 				break;
-			case ".mp3 |  320kbps | 16 bit | stereo":
+			case ".mp3 | 320kbps | 16 bit | stereo":
 				outPresetPath = newPluginPath + this.fixPath("\\presets\\mp3_320kbps_16bit_stereo.epr"); 
 				break;
 			
