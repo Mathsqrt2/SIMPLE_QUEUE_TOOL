@@ -138,7 +138,7 @@ $.runScript = {
         for (var i = 0; i < folder.children.length; i++) {
             var currentSubfolderElement = folder.children[i];
             if (currentSubfolderElement.type == ProjectItemType.BIN) {
-                this.processFolder(currentSubfolderElement);
+                processFolder(currentSubfolderElement);
             } else {
                 var foundElement = {
                     name: currentSubfolderElement.name,
@@ -163,7 +163,7 @@ $.runScript = {
                         selectedItems.push(foundElement);
                     }
                 }
-                alert(" " + JSON.stringify(selectedItems))
+                alert(" " + JSON.stringify(selectedItems));
             } else {
                 selectedItems = [];
             }
