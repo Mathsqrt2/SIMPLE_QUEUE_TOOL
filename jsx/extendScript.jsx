@@ -1,3 +1,4 @@
+app.enableQE();
 var outputFolderPath = "";
 var newCustomEncodingPresetPath = "";
 var newDirectoryName;
@@ -8,6 +9,7 @@ var isSecurityEnabled = true;
 var proj = app.project;
 var currentSequence = proj.activeSequence;
 var startEncoding = false;
+var selectedItems = [];
 
 $.runScript = {
     processRequest: function(userConfig) {
@@ -110,8 +112,26 @@ $.runScript = {
                 }
             }
         } else if (config.applyFor == "selected sequences") {
+            if (config.type == "clips") {
+
+                if (startEncoding) {
+                    app.encoder.startBatch();
+                }
+            } else {
+
+
+                if (startEncoding) {
+                    app.encoder.startBatch();
+                }
+            }
 
         }
+    },
+    attachListener: function(){
+        app.bind("onSourceClipSelectedInProjectPanel",this.selectionHandling);
+    },
+    selectionHandling: function(event){
+        
     },
     addToExportAllCurrentSequenceDuration: function(localSequence, localIteration) {
         var clipIn, clipOut;
