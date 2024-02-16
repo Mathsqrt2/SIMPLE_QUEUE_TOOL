@@ -1,4 +1,6 @@
 app.enableQE();
+var proj = app.project;
+var currentSequence = proj.activeSequence;
 var outputFolderPath = "";
 var newCustomEncodingPresetPath = "";
 var newDirectoryName;
@@ -6,8 +8,6 @@ var newPluginPath;
 var formConfiguration;
 var currentOS;
 var isSecurityEnabled = true;
-var proj = app.project;
-var currentSequence = proj.activeSequence;
 var startEncoding = false;
 var selectedItems = [];
 
@@ -16,7 +16,8 @@ $.runScript = {
         config = JSON.parse(userConfig);
         newDirectoryName = config.folderName;
         newPluginPath = this.fixPath(config.pluginPath);
-
+        isSecurityEnabled = config.secureMode; 
+        startEncoding = config.renderAfterQueue;
         var configSave = new File(newPluginPath + this.fixPath("\\config\\config.json"));
         configSave.open("w");
         configSave.write(userConfig);
@@ -503,11 +504,6 @@ function loadConfiguration(path) {
 function setOSValue(csinfo) {
     var obj = JSON.parse(csinfo);
     currentOS = obj.index;
-}
-
-function checkSecurityStatus(inputValue) {
-    var val = JSON.parse(inputValue);
-    isSecurityEnabled = val.status;
 }
 
 function isItFirstUseJSX(path) {
