@@ -5,13 +5,14 @@ var newPluginPath;
 var formConfiguration;
 var currentOS;
 var isSecurityEnabled = true;
+var proj = app.project;
+var currentSequence = proj.activeSequence;
+var startEncoding = false;
 
 $.runScript = {
     processRequest: function(userConfig) {
-        proj = app.project;
         config = JSON.parse(userConfig);
         newDirectoryName = config.folderName;
-        currentSequence = proj.activeSequence;
         newPluginPath = this.fixPath(config.pluginPath);
 
         var configSave = new File(newPluginPath + this.fixPath("\\config\\config.json"));
@@ -22,8 +23,15 @@ $.runScript = {
         if (config.applyFor == "current sequence") {
             if (config.type == "clips") {
                 this.addAllClipsToMediaEncoderQueue(currentSequence);
+                if (startEncoding) {
+                    app.encoder.startBatch();
+                }
+
             } else {
                 this.addToExportAllCurrentSequenceDuration(currentSequence, -1);
+                if (startEncoding) {
+                    app.encoder.startBatch();
+                }
             }
         } else if (config.applyFor == "multiple sequences") {
             if (config.searchPattern != null) {
@@ -51,6 +59,9 @@ $.runScript = {
                             proj.openSequence(currentSequence.sequenceID);
                             this.addAllClipsToMediaEncoderQueue(currentSequence);
                         }
+                        if (startEncoding) {
+                            app.encoder.startBatch();
+                        }
                     } else {
                         var numOn;
                         for (var j = 0; j < sequencesFound.length; j++) {
@@ -59,6 +70,9 @@ $.runScript = {
                             numOn = config.numOn == true ? numOn = j : -1;
                             this.addToExportAllCurrentSequenceDuration(currentSequence, numOn);
                         };
+                        if (startEncoding) {
+                            app.encoder.startBatch();
+                        }
                     }
 
                 } else {
@@ -72,6 +86,9 @@ $.runScript = {
                             proj.openSequence(currentSequence.sequenceID);
                             this.addAllClipsToMediaEncoderQueue(currentSequence);
                         }
+                        if (startEncoding) {
+                            app.encoder.startBatch();
+                        }
                     } else {
                         alert("This project doesn't contain any sequences");
                     }
@@ -84,11 +101,16 @@ $.runScript = {
                             proj.openSequence(currentSequence.sequenceID);
                             this.addToExportAllCurrentSequenceDuration(currentSequence, numOn);
                         }
+                        if (startEncoding) {
+                            app.encoder.startBatch();
+                        }
                     } else {
                         alert("This project doesn't contain any sequences");
                     }
                 }
             }
+        } else if (config.applyFor == "selected sequences") {
+
         }
     },
     addToExportAllCurrentSequenceDuration: function(localSequence, localIteration) {
@@ -203,6 +225,19 @@ $.runScript = {
             }
         } else {
             alert("Specified sequence doesn't exists!");
+        }
+    },
+    findBinElementByName: function(project, nameToFind) {
+        if (nameToFind) {
+            for (var i = 0; i < project.children.length; i++) {
+                var currentChild = project.children[i];
+                if (currentChild.type == ProjectItemType.BIN && currentChild.name.toLowerCase() == nameToFind.toLowerCase()) {
+                    return currentChild;
+                }
+                if (currentChild.type == ProjectItemType.BIN) {
+                    findBinElementByName(currentChild, nameToFind);
+                }
+            }
         }
     },
     secureTracks: function(tracks, mode) {
@@ -369,7 +404,6 @@ $.runScript = {
                 checkIfExists.close();
             }
         }
-
         app.encoder.encodeSequence(currentSequence, outputFilePath, this.exportingPreset(1), app.encoder.ENCODE_IN_TO_OUT, 0);
     },
 }
@@ -412,7 +446,7 @@ function loadConfiguration(path) {
 
 function setOSValue(csinfo) {
     var obj = JSON.parse(csinfo);
-    currentOS = csinfo.index;
+    currentOS = obj.index;
 }
 
 function checkSecurityStatus(inputValue) {

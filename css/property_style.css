@@ -16,7 +16,7 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 6px;
-  width: 470px;
+  width: 450px;
   background-color: #1a1a1a;
   border-radius: 32px;
   box-shadow: 0px 0px 6px rgba(235, 235, 235, 0.1);
@@ -37,7 +37,7 @@
   font-size: 14px;
   font-weight: 800;
   margin-left: 20px;
-  width: 190px;
+  width: 170px;
 
   display: flex;
   flex-direction: row;
