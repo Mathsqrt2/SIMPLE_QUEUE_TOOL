@@ -112,26 +112,62 @@ $.runScript = {
                 }
             }
         } else if (config.applyFor == "selected sequences") {
-            if (config.type == "clips") {
+            if (selectedItems) {
+                if (config.type == "clips") {
 
-                if (startEncoding) {
-                    app.encoder.startBatch();
+                    if (startEncoding) {
+                        app.encoder.startBatch();
+                    }
+                } else {
+
+
+                    if (startEncoding) {
+                        app.encoder.startBatch();
+                    }
                 }
             } else {
-
-
-                if (startEncoding) {
-                    app.encoder.startBatch();
-                }
+                alert("No selected items found");
             }
 
         }
     },
-    attachListener: function(){
-        app.bind("onSourceClipSelectedInProjectPanel",this.selectionHandling);
+    attachListener: function() {
+        app.bind("onSourceClipSelectedInProjectPanel", this.selectionHandling);
     },
-    selectionHandling: function(event){
-        
+    processFolder: function(folder) {
+        for (var i = 0; i < folder.children.length; i++) {
+            var currentSubfolderElement = folder.children[i];
+            if (currentSubfolderElement.type == ProjectItemType.BIN) {
+                this.processFolder(currentSubfolderElement);
+            } else {
+                var foundElement = {
+                    name: currentSubfolderElement.name,
+                    type: currentSubfolderElement.type,
+                }
+                selectedItems.push(foundElement);
+            }
+        }
+    },
+    selectionHandling: function(event) {
+        if (config.applyFor == "selected sequences") {
+            if (event.length) {
+                for (var i = 0; i < event.length; i++) {
+                    var currentElement = event[i];
+                    if (currentElement.type == ProjectItemType.BIN) {
+                        this.processFolder(currentElement);
+                    } else {
+                        var foundElement = {
+                            name: event[i].name,
+                            type: event[i].type,
+                        }
+                        selectedItems.push(foundElement);
+                    }
+                }
+                alert(" " + JSON.stringify(selectedItems))
+            } else {
+                selectedItems = [];
+            }
+        }
     },
     addToExportAllCurrentSequenceDuration: function(localSequence, localIteration) {
         var clipIn, clipOut;
