@@ -16,7 +16,7 @@ $.runScript = {
         config = JSON.parse(userConfig);
         newDirectoryName = config.folderName;
         newPluginPath = this.fixPath(config.pluginPath);
-        isSecurityEnabled = config.secureMode; 
+        isSecurityEnabled = config.secureMode;
         startEncoding = config.renderAfterQueue;
         var configSave = new File(newPluginPath + this.fixPath("\\config\\config.json"));
         configSave.open("w");
@@ -113,14 +113,35 @@ $.runScript = {
                 }
             }
         } else if (config.applyFor == "selected sequences") {
-            if (selectedItems) {
-                if (config.type == "clips") {
+            var encodingQueue = [];
 
+            if (selectedItems.length > 0) {
+                var currentSeq;
+                for (var i = 0; i < selectedItems.length; i++) {
+                    var currentItem = selectedItems[i];
+                    for (var j = 0; j < proj.sequences.numSequences; j++) {
+                        currentSeq = proj.sequences[j];
+                        if (currentItem.name == currentSeq.name) {
+                            encodingQueue.push(currentSeq);
+                        }
+                    }
+                }
+                if (config.type == "clips") {
+                    for (var k = 0; k < encodingQueue.length; k++) {
+                        seq = encodingQueue[k];
+                        proj.openSequence(seq.sequenceID);
+                        this.addAllClipsToMediaEncoderQueue(seq);
+                    }
                     if (startEncoding) {
                         app.encoder.startBatch();
                     }
                 } else {
-
+                    var numOn;
+                    for (var k = 0; k < encodingQueue.length; k++) {
+                        numOn = config.numOn == true ? numOn = i : -1;
+                        proj.openSequence(encodingQueue[k].sequenceID);
+                        this.addToExportAllCurrentSequenceDuration(encodingQueue[k], numOn);
+                    }
 
                     if (startEncoding) {
                         app.encoder.startBatch();
@@ -135,36 +156,18 @@ $.runScript = {
     attachListener: function() {
         app.bind("onSourceClipSelectedInProjectPanel", this.selectionHandling);
     },
-    processFolder: function(folder) {
-        for (var i = 0; i < folder.children.length; i++) {
-            var currentSubfolderElement = folder.children[i];
-            if (currentSubfolderElement.type == ProjectItemType.BIN) {
-                processFolder(currentSubfolderElement);
-            } else {
-                var foundElement = {
-                    name: currentSubfolderElement.name,
-                    type: currentSubfolderElement.type,
-                }
-                selectedItems.push(foundElement);
-            }
-        }
-    },
     selectionHandling: function(event) {
         if (config.applyFor == "selected sequences") {
             if (event.length) {
+                selectedItems = [];
                 for (var i = 0; i < event.length; i++) {
                     var currentElement = event[i];
-                    if (currentElement.type == ProjectItemType.BIN) {
-                        this.processFolder(currentElement);
-                    } else {
-                        var foundElement = {
-                            name: event[i].name,
-                            type: event[i].type,
-                        }
-                        selectedItems.push(foundElement);
+                    var foundElement = {
+                        name: currentElement.name,
+                        type: currentElement.type,
                     }
+                    selectedItems.push(foundElement);
                 }
-                alert(" " + JSON.stringify(selectedItems));
             } else {
                 selectedItems = [];
             }
@@ -277,24 +280,10 @@ $.runScript = {
                     }
                 }
             } else {
-
                 alert(monit + " tracks missing!");
             }
         } else {
             alert("Specified sequence doesn't exists!");
-        }
-    },
-    findBinElementByName: function(project, nameToFind) {
-        if (nameToFind) {
-            for (var i = 0; i < project.children.length; i++) {
-                var currentChild = project.children[i];
-                if (currentChild.type == ProjectItemType.BIN && currentChild.name.toLowerCase() == nameToFind.toLowerCase()) {
-                    return currentChild;
-                }
-                if (currentChild.type == ProjectItemType.BIN) {
-                    findBinElementByName(currentChild, nameToFind);
-                }
-            }
         }
     },
     secureTracks: function(tracks, mode) {
