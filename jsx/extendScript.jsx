@@ -113,40 +113,31 @@ $.runScript = {
                 }
             }
         } else if (config.applyFor == "selected sequences") {
-            var encodingQueue = [];
-
+            var encodingQueue;
+            var currentItem;
+            var numOn;
             if (selectedItems.length > 0) {
-                var currentSeq;
+                encodingQueue = [];
                 for (var i = 0; i < selectedItems.length; i++) {
-                    var currentItem = selectedItems[i];
+                    currentItem = selectedItems[i];
                     for (var j = 0; j < proj.sequences.numSequences; j++) {
-                        currentSeq = proj.sequences[j];
-                        if (currentItem.name == currentSeq.name) {
-                            encodingQueue.push(currentSeq);
+                        currentSequence = proj.sequences[j];
+                        if (currentItem.name == currentSequence.name) {
+                            if (config.type == "clips") {
+                                proj.openSequence(currentSequence.sequenceID);
+                                this.addAllClipsToMediaEncoderQueue(currentSequence);
+                            } else {
+                                numOn = config.numOn == true ? numOn = l : -1;
+                                proj.openSequence(currentSequence.sequenceID);
+                                this.addToExportAllCurrentSequenceDuration(currentSequence, numOn);
+                            }
                         }
                     }
                 }
-                if (config.type == "clips") {
-                    for (var k = 0; k < encodingQueue.length; k++) {
-                        seq = encodingQueue[k];
-                        proj.openSequence(seq.sequenceID);
-                        this.addAllClipsToMediaEncoderQueue(seq);
-                    }
-                    if (startEncoding) {
-                        app.encoder.startBatch();
-                    }
-                } else {
-                    var numOn;
-                    for (var k = 0; k < encodingQueue.length; k++) {
-                        numOn = config.numOn == true ? numOn = i : -1;
-                        proj.openSequence(encodingQueue[k].sequenceID);
-                        this.addToExportAllCurrentSequenceDuration(encodingQueue[k], numOn);
-                    }
-
-                    if (startEncoding) {
-                        app.encoder.startBatch();
-                    }
+                if (startEncoding) {
+                    app.encoder.startBatch();
                 }
+
             } else {
                 alert("No selected items found");
             }
@@ -175,7 +166,16 @@ $.runScript = {
     },
     addToExportAllCurrentSequenceDuration: function(localSequence, localIteration) {
         var clipIn, clipOut;
-        var availableTracks = localSequence.videoTracks;
+        var availableTracks;
+
+        if (config.basedOn == "each clip" || config.basedOn == "clips on track" || config.basedOn == "selected clips") {
+            monit = "Video";
+            availableTracks = localSequence.videoTracks;
+        } else {
+            monit = "Audio";
+            availableTracks = localSequence.audioTracks;
+        }
+
         if (localSequence) {
             if (availableTracks.length > 0) {
                 var firstClip = availableTracks[0].clips;
@@ -203,7 +203,7 @@ $.runScript = {
                     alert("sequence is empty!");
                 }
             } else {
-                alert("video tracks missing!");
+                alert(monit + " tracks missing!");
             }
         } else {
             alert("Specified sequence doesn't exist!");
