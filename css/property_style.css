@@ -19,7 +19,7 @@
   width: 450px;
   background-color: #1a1a1a;
   border-radius: 32px;
-  box-shadow: 0px 0px 6px rgba(235, 235, 235, 0.1);
+  box-shadow: 0px 0px 5px rgba(215, 215, 215, 0.1);
 }
 
 .property_content {
@@ -70,7 +70,7 @@ input {
   display: block;
   background-color: #303030;
   border: none;
-  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.35);
   transition: all 0.1s ease-in-out;
 
   box-sizing: border-box;
