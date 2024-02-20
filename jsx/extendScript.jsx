@@ -200,13 +200,19 @@ $.runScript = {
                     this.addToAME(localIteration);
 
                 } else {
-                    alert("sequence is empty!");
+                    if (config.applyFor != "multiple sequences") {
+                        alert("sequence is empty!");
+                    }
                 }
             } else {
-                alert(monit + " tracks missing!");
+                if (config.applyFor != "multiple sequences") {
+                    alert(monit + " tracks missing!");
+                }
             }
         } else {
-            alert("Specified sequence doesn't exist!");
+            if (config.applyFor != "multiple sequences") {
+                alert("Specified sequence doesn't exist!");
+            }
         }
     },
     processEeachTrack: function(tracks) {
