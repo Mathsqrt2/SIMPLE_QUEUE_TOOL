@@ -44,6 +44,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  border-right: 2px solid #30c448;
 }
 
 .collector {

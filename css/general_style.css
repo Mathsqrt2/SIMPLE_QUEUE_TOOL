@@ -19,18 +19,6 @@ body {
   min-width: 480px;
 }
 
-.separator_horizontal {
-  background-color: #30c448;
-  width: 100%;
-  height: 2px;
-}
-
-.separator_vertical {
-  background-color: #2aa73f;
-  height: 35px;
-  width: 2px;
-}
-
 .hidden {
   display: none !important;
 }

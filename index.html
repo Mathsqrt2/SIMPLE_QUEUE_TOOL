@@ -9,24 +9,19 @@
     <link rel="stylesheet" href="css/property_style.css">
     <link rel="stylesheet" href="css/confirm_style.css">
     <script src="lib/CSInterface.js"></script>
-    <script src="lib/index.js" type="text/javascript"> </script>
+    <script src="lib/index.js" type="text/javascript"></script>
 </head>
 
 <body>
     <div id="app_container">
         <div id="app_header">
-            <div id="app_header_content">
-                <p id="app_title">SIMPLE QUEUE TOOL</p>
-                <input id="supportButton" type="button" value="SUPPORT">
-            </div>
-            <div div class="separator_horizontal"></div>
+            <p id="app_title">SIMPLE QUEUE TOOL</p>
+            <input id="supportButton" type="button" value="SUPPORT">
         </div>
         <div id="app_content">
-
             <div class="property_box">
                 <div class="property_label">
                     <p>RENDER TYPE:</p>
-                    <div class="separator_vertical"></div>
                 </div>
 
                 <div class="property_content">
@@ -40,7 +35,6 @@
             <div class="hidden property_box" id="addIndexOption">
                 <div class="property_label">
                     <p>ADD INDEX TO NAME:</p>
-                    <div class="separator_vertical"></div>
                 </div>
 
                 <div class="property_content">
@@ -56,7 +50,6 @@
             <div class="property_box" id="basedOnPropertyBox">
                 <div class="property_label">
                     <p id="fieldLabel">RENDERING BASE:</p>
-                    <div class="separator_vertical"></div>
                 </div>
                 <div class="property_content">
                     <select id="basedOn">
@@ -73,7 +66,6 @@
             <div class="hidden property_box" id="baseIndexContainer">
                 <div class="property_label">
                     <p id="trackIndexLabel">TRACK INDEX:</p>
-                    <div class="separator_vertical"></div>
                 </div>
                 <div class="property_content">
                     <input id="baseIndex" type="number" placeholder="base track index" min="0" max="10">
@@ -83,7 +75,6 @@
             <div class="property_box">
                 <div class="property_label" id="numOnLabel">
                     <p>APPLY FOR:</p>
-                    <div class="separator_vertical"></div>
                 </div>
                 <div class="property_content">
                     <select id="rangeOfRenderingQueue">
@@ -97,7 +88,6 @@
             <div class="hidden property_box" id="searchContainer">
                 <div class="property_label">
                     <p>SEARCH PATTERN:</p>
-                    <div class="separator_vertical"></div>
                 </div>
                 <div class="property_content">
                     <input type='text' id="searchedValue" placeholder="choose sequences" class="property_input">
@@ -107,7 +97,6 @@
             <div class="property_box">
                 <div class="property_label">
                     <p>ENCODING PRESET:</p>
-                    <div class="separator_vertical"></div>
                 </div>
                 <div class="property_content">
                     <select id="encodingPreset">
@@ -135,7 +124,6 @@
             <div class="hidden property_box" id="selectPresetPathContainer">
                 <div class="property_label">
                     <p>SET PRESET PATH</p>
-                    <div class="separator_vertical"></div>
                 </div>
                 <div class="property_content">
                     <input type="button" value="choose preset path" class="property_input" id="selectPresetPath">
@@ -145,7 +133,6 @@
             <div class="property_box">
                 <div class="property_label">
                     <p>OUTPUT DIRECTORY:</p>
-                    <div class="separator_vertical"></div>
                 </div>
                 <div class="property_content">
                     <input type="button" value="set output path" id="newOutputPath" class="property_input">
@@ -155,7 +142,6 @@
             <div class="property_box">
                 <div class="property_label">
                     <p>NEW FOLDER NAME:</p>
-                    <div class="separator_vertical"></div>
                 </div>
 
                 <div class="property_content">
@@ -166,7 +152,6 @@
             <div class="property_box">
                 <div class="property_label">
                     <p>OUTPUT NAME:</p>
-                    <div class="separator_vertical"></div>
                 </div>
 
                 <div class="property_content">
@@ -177,7 +162,6 @@
             <div class="property_box">
                 <div class="property_label">
                     <p>INDEX OFFSET:</p>
-                    <div class="separator_vertical"></div>
                 </div>
                 <div class="property_content">
                     <input type="number" id="indexOffset" placeholder="index offset" min="0" max="9000"
@@ -188,7 +172,6 @@
             <div class="property_box" id="secure_mode">
                 <div class="property_label">
                     <p>SECURE MODE:</p>
-                    <div class="separator_vertical"></div>
                 </div>
                 <div class="property_content">
                     <select id="secureModeSwitch">
@@ -201,7 +184,6 @@
             <div class="property_box" id="render_after_queue">
                 <div class="property_label">
                     <p>START RENDER:</p>
-                    <div class="separator_vertical"></div>
                 </div>
                 <div class="property_content">
                     <select id="renderSwitch">

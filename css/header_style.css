@@ -1,7 +1,8 @@
 #app_header {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 
   width: 100%;
   background-color: #151515;
@@ -9,13 +10,8 @@
   font-family: montserrat;
   font-size: 20px;
   font-weight: 700;
-}
 
-#app_header_content {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
+  border-bottom: 3px solid #30c448;
 }
 
 #supportButton {
