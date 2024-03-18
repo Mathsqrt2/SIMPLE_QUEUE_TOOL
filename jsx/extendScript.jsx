@@ -1,3 +1,5 @@
+#include fsHandlers.jsx
+
 app.enableQE();
 var proj = app.project;
 var currentSequence = proj.activeSequence;
@@ -306,65 +308,22 @@ $.runScript = {
     },
     exportingPreset: function(mode) {
         var outPresetPath;
-        switch (config.encodingPreset) {
-            case "h.264 | 64mbps | 384kbps":
-                outPresetPath = newPluginPath + this.fixPath("\\presets\\h264_64mbps_mp4_384kbps.epr");
-                break;
-            case "h.264 | 15mbps | 384kbps":
-                outPresetPath = newPluginPath + this.fixPath("\\presets\\h264_15mbps_mp4_384kbps.epr");
-                break;
-            case "h.264 | 64mbps | no audio":
-                outPresetPath = newPluginPath + this.fixPath("\\presets\\h264_64mbps_mp4_no-audio.epr");
-                break;
-            case "h.264 | 15mbps | no audio":
-                outPresetPath = newPluginPath + this.fixPath("\\presets\\h264_15mbps_mp4_no-audio.epr");
-                break;
-            case "vp9 | quality 60% | 384kbps":
-                outPresetPath = newPluginPath + this.fixPath("\\presets\\vp9_q60_webm_384kbps.epr");
-                break;
-            case "vp9 | quality 90% | 384kbps":
-                outPresetPath = newPluginPath + this.fixPath("\\presets\\vp9_q90_webm_384kbps.epr");
-                break;
-            case "vp9 | quality 60% | no audio":
-                outPresetPath = newPluginPath + this.fixPath("\\presets\\vp9_q60_webm_no-audio.epr");
-                break;
-            case "vp9 | quality 90% | no audio":
-                outPresetPath = newPluginPath + this.fixPath("\\presets\\vp9_q90_webm_no-audio.epr");
-                break;
-            case "quicktime | alpha | audio on":
-                outPresetPath = newPluginPath + this.fixPath("\\presets\\qicktime_alpha_with-audio.epr");
-                break;
-            case "quicktime | alpha | audio off":
-                outPresetPath = newPluginPath + this.fixPath("\\presets\\qicktime_alpha_no-audio.epr");
-                break;
-            case ".wav | umcompressed | 16 bit | stereo":
-                outPresetPath = newPluginPath + this.fixPath("\\presets\\wav_umcompressed_16bit_stereo.epr");
-                break;
-            case ".wav | umcompressed | 24 bit | stereo":
-                outPresetPath = newPluginPath + this.fixPath("\\presets\\wav_umcompressed_24bit_stereo.epr");
-                break;
-            case ".wav | umcompressed | 32 bit | stereo":
-                outPresetPath = newPluginPath + this.fixPath("\\presets\\wav_umcompressed_32bit_stereo.epr");
-                break;
-            case ".mp3 | 192kbps | 16 bit | stereo":
-                outPresetPath = newPluginPath + this.fixPath("\\presets\\mp3_192kbps_16bit_stereo.epr");
-                break;
-            case ".mp3 | 256kbps | 16 bit | stereo":
-                outPresetPath = newPluginPath + this.fixPath("\\presets\\mp3_256kbps_16bit_stereo.epr");
-                break;
-            case ".mp3 | 320kbps | 16 bit | stereo":
-                outPresetPath = newPluginPath + this.fixPath("\\presets\\mp3_320kbps_16bit_stereo.epr");
-                break;
+        var presetsFile = new File(newPluginPath + this.fixPath("\\presets\\presets.json"));
+        presetsFile.open("r");
+        var presetsList = JSON.parse(presetsFile.read());
+        var currentPreset = presetsList[config.encodingPreset];
+        presetsFile.close();
 
-            case "custom":
-                if (newCustomEncodingPresetPath != "") {
-                    outPresetPath = newCustomEncodingPresetPath.fsName;
-                } else {
-                    alert("You haven't chosen any preset path");
-                    newCustomEncodingPresetPath = getNewPreset();
-                    return 0;
-                }
-                break;
+        if (currentPreset == "custom") {
+            if (newCustomEncodingPresetPath != "") {
+                outPresetPath = newCustomEncodingPresetPath.fsName;
+            } else {
+                alert("You haven't chosen any preset path");
+                newCustomEncodingPresetPath = getNewPreset();
+                return 0;
+            }
+        } else {
+            outPresetPath = newPluginPath + this.fixPath(currentPreset);
         }
 
         var outPreset = new File(outPresetPath);
@@ -408,13 +367,15 @@ $.runScript = {
             return app.project.path.substr(0, app.project.path.length - app.project.name.length);
         }
     },
-    loadPreset: function(path) {
-        var customPresetPath = this.fixPath(path) + this.fixPath("\\presets\\dynamic\\user_custom_preset.epr");
+    loadPreset: function() {
+        var customPresetPath = newPluginPath + this.fixPath("\\presets\\dynamic\\user_custom_preset.epr");
         var presetInstance = new File(customPresetPath);
         if (presetInstance.exists) {
             newCustomEncodingPresetPath = presetInstance;
+            return "LOADED FROM CONFIG";
         } else {
             getNewPreset(path);
+            return "SET NEW PATH";
         }
     },
     prepareNewFolder: function(outPath) {
@@ -458,68 +419,4 @@ $.runScript = {
         }
         app.encoder.encodeSequence(currentSequence, outputFilePath, this.exportingPreset(1), app.encoder.ENCODE_IN_TO_OUT, 0);
     },
-}
-
-function getFolderPath() {
-    outputFolderPath = Folder.selectDialog("Choose the output directory");
-    return outputFolderPath.fsName;
-}
-
-function getNewPreset(path) {
-    newCustomEncodingPresetPath = File.openDialog("Choose preset", "Required: *.epr*", false);
-
-    newCustomEncodingPresetPath.open("r");
-    var backup = newCustomEncodingPresetPath.read();
-    newCustomEncodingPresetPath.close();
-
-    var dynamicPresetPath = $.runScript.fixPath(path) + $.runScript.fixPath("\\presets\\dynamic\\user_custom_preset.epr");
-    var recoveryFile = new File(dynamicPresetPath);
-    if (dynamicPresetPath.exists) {
-        recoveryFile.remove();
-        recoveryFile.close();
-    }
-    recoveryFile.open("w");
-    recoveryFile.write(backup);
-    recoveryFile.close();
-}
-
-function loadConfiguration(path) {
-    var importConfig = new File($.runScript.fixPath(path) + $.runScript.fixPath("\\config\\config.json"));
-    var result;
-    if (importConfig.exists) {
-        importConfig.open("r");
-        result = importConfig.read();
-        importConfig.close();
-        return result;
-    } else {
-        return 0;
-    }
-}
-
-function setOSValue(csinfo) {
-    var obj = JSON.parse(csinfo);
-    currentOS = obj.index;
-}
-
-function isItFirstUseJSX(path) {
-    var newResponse = {
-        isItFirstUse: true,
-        actionTime: null,
-    };
-
-    var logPath = $.runScript.fixPath(path) + $.runScript.fixPath("\\config\\firstLaunchLog.json");
-    var firstLaunchLog = new File(logPath);
-
-    if (firstLaunchLog.exists) {
-        newResponse.isItFirstUse = false;
-    } else {
-        var currentTime = new Date();
-        newResponse.actionTime = currentTime.getTime();
-        firstLaunchLog.open("w");
-        firstLaunchLog.write(JSON.stringify(newResponse));
-        firstLaunchLog.close();
-    }
-
-    var output = JSON.stringify(newResponse);
-    return output;
 }

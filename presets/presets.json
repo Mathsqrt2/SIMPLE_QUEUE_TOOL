@@ -1,0 +1,19 @@
+[
+    "\\presets\\h264_64mbps_mp4_384kbps.epr",
+    "\\presets\\h264_15mbps_mp4_384kbps.epr",
+    "\\presets\\h264_64mbps_mp4_no-audio.epr",
+    "\\presets\\h264_15mbps_mp4_no-audio.epr",
+    "\\presets\\vp9_q60_webm_384kbps.epr",
+    "\\presets\\vp9_q90_webm_384kbps.epr",
+    "\\presets\\vp9_q60_webm_no-audio.epr",
+    "\\presets\\vp9_q90_webm_no-audio.epr",
+    "\\presets\\qicktime_alpha_with-audio.epr",
+    "\\presets\\qicktime_alpha_no-audio.epr",
+    "\\presets\\wav_umcompressed_16bit_stereo.epr",
+    "\\presets\\wav_umcompressed_24bit_stereo.epr",
+    "\\presets\\wav_umcompressed_32bit_stereo.epr",
+    "\\presets\\mp3_192kbps_16bit_stereo.epr",
+    "\\presets\\mp3_256kbps_16bit_stereo.epr",
+    "\\presets\\mp3_320kbps_16bit_stereo.epr",
+    "custom"
+]
