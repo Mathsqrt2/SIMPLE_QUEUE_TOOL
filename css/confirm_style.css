@@ -4,7 +4,7 @@
   justify-content: center;
   align-items: center;
 
-  padding-top: 30px;
+  padding-top: 20px;
 }
 
 .confirm-locked {
@@ -22,9 +22,9 @@
   width: fit-content;
 
   background-color: #1b7e2c;
-  padding: 0px 24px;
+  padding: 16px 24px;
 
-  border-radius: 30px;
+  border-radius: 32px;
   transition: all 0.15s ease-in-out;
   cursor: pointer;
 }

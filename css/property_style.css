@@ -34,16 +34,14 @@
 }
 
 .property_label {
+  display: inline-block;
   font-family: montserrat;
   font-size: 14px;
   font-weight: 800;
   margin-left: 20px;
   width: 170px;
 
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
+  padding-right: 5px;
   border-right: 2px solid #30c448;
 }
 
