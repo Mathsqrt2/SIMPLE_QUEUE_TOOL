@@ -1,8 +1,7 @@
 #include fsHandlers.jsx
 
 var proj, currentSequence, newPluginPath, currentOS;
-var outputFolderPath = "";
-var newCustomEncodingPresetPath = "";
+var outputFolderPath = "", newCustomEncodingPresetPath = "";
 var selectedItems = [];
 
 $.runScript = {
@@ -12,11 +11,6 @@ $.runScript = {
         config = JSON.parse(userConfig);
         config.folderName = config.folderName;
         newPluginPath = this.fixPath(config.pluginPath);
-
-        var configSave = new File(newPluginPath + this.fixPath("\\config\\config.json"));
-        configSave.open("w");
-        configSave.write(userConfig);
-        configSave.close();
 
         if (config.applyFor == "current sequence") {
             if (config.type == "clips") {
