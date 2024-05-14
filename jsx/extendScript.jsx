@@ -1,15 +1,8 @@
 #include fsHandlers.jsx
 
-var proj;
-var currentSequence;
+var proj, currentSequence, newPluginPath, currentOS;
 var outputFolderPath = "";
 var newCustomEncodingPresetPath = "";
-var newDirectoryName;
-var newPluginPath;
-var formConfiguration;
-var currentOS;
-var isSecurityEnabled = true;
-var startEncoding = false;
 var selectedItems = [];
 
 $.runScript = {
@@ -17,10 +10,9 @@ $.runScript = {
         proj = app.project;
         currentSequence = proj.activeSequence;
         config = JSON.parse(userConfig);
-        newDirectoryName = config.folderName;
+        config.folderName = config.folderName;
         newPluginPath = this.fixPath(config.pluginPath);
-        isSecurityEnabled = config.secureMode;
-        startEncoding = config.renderAfterQueue;
+
         var configSave = new File(newPluginPath + this.fixPath("\\config\\config.json"));
         configSave.open("w");
         configSave.write(userConfig);
@@ -29,13 +21,13 @@ $.runScript = {
         if (config.applyFor == "current sequence") {
             if (config.type == "clips") {
                 this.addAllClipsToMediaEncoderQueue(currentSequence);
-                if (startEncoding) {
+                if (config.renderAfterQueue) {
                     app.encoder.startBatch();
                 }
 
             } else {
                 this.addToExportAllCurrentSequenceDuration(currentSequence, -1);
-                if (startEncoding) {
+                if (config.renderAfterQueue) {
                     app.encoder.startBatch();
                 }
             }
@@ -65,7 +57,7 @@ $.runScript = {
                             proj.openSequence(currentSequence.sequenceID);
                             this.addAllClipsToMediaEncoderQueue(currentSequence);
                         }
-                        if (startEncoding) {
+                        if (config.renderAfterQueue) {
                             app.encoder.startBatch();
                         }
                     } else {
@@ -76,7 +68,7 @@ $.runScript = {
                             numOn = config.numOn == true ? numOn = j : -1;
                             this.addToExportAllCurrentSequenceDuration(currentSequence, numOn);
                         };
-                        if (startEncoding) {
+                        if (config.renderAfterQueue) {
                             app.encoder.startBatch();
                         }
                     }
@@ -92,7 +84,7 @@ $.runScript = {
                             proj.openSequence(currentSequence.sequenceID);
                             this.addAllClipsToMediaEncoderQueue(currentSequence);
                         }
-                        if (startEncoding) {
+                        if (config.renderAfterQueue) {
                             app.encoder.startBatch();
                         }
                     } else {
@@ -107,7 +99,7 @@ $.runScript = {
                             proj.openSequence(currentSequence.sequenceID);
                             this.addToExportAllCurrentSequenceDuration(currentSequence, numOn);
                         }
-                        if (startEncoding) {
+                        if (config.renderAfterQueue) {
                             app.encoder.startBatch();
                         }
                     } else {
@@ -137,7 +129,7 @@ $.runScript = {
                         }
                     }
                 }
-                if (startEncoding) {
+                if (config.renderAfterQueue) {
                     app.encoder.startBatch();
                 }
 
@@ -296,7 +288,7 @@ $.runScript = {
         }
     },
     secureTracks: function(tracks, mode) {
-        if (isSecurityEnabled) {
+        if (config.secureMode) {
             for (var i = 0; i < tracks.length; i++) {
                 tracks[i].setMute(mode);
                 tracks[i].setLocked(mode);
@@ -380,12 +372,12 @@ $.runScript = {
         }
     },
     prepareNewFolder: function(outPath) {
-        if (newDirectoryName != undefined && newDirectoryName != null && newDirectoryName != "") {
-            var f = new Folder(outPath + this.fixPath("/") + newDirectoryName);
+        if (config.folderName != undefined && config.folderName != null && config.folderName != "") {
+            var f = new Folder(outPath + this.fixPath("/") + config.folderName);
             if (!f.exists) {
                 f.create();
             }
-            return newDirectoryName + this.fixPath("/");
+            return config.folderName + this.fixPath("/");
         } else {
             return "";
         }

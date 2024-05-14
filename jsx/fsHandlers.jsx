@@ -26,19 +26,6 @@ function setOSValue(csinfo) {
     currentOS = obj.index;
 }
 
-function loadConfiguration(path) {
-    var importConfig = new File($.runScript.fixPath(path) + $.runScript.fixPath("\\config\\config.json"));
-    var result;
-    if (importConfig.exists) {
-        importConfig.open("r");
-        result = importConfig.read();
-        importConfig.close();
-        return result;
-    } else {
-        return 0;
-    }
-}
-
 function getFolderPath() {
     outputFolderPath = Folder.selectDialog("Choose the output directory");
     return outputFolderPath.fsName;
