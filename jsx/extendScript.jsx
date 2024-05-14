@@ -1,8 +1,7 @@
 #include fsHandlers.jsx
 
-app.enableQE();
-var proj = app.project;
-var currentSequence = proj.activeSequence;
+var proj;
+var currentSequence;
 var outputFolderPath = "";
 var newCustomEncodingPresetPath = "";
 var newDirectoryName;
@@ -15,6 +14,8 @@ var selectedItems = [];
 
 $.runScript = {
     processRequest: function(userConfig) {
+        proj = app.project;
+        currentSequence = proj.activeSequence;
         config = JSON.parse(userConfig);
         newDirectoryName = config.folderName;
         newPluginPath = this.fixPath(config.pluginPath);
